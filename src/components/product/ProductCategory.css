@@ -1,0 +1,226 @@
+.productcategory-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: var(--bg-color);
+  max-width: 100%;
+}
+
+.productcategory-container {
+  background-color: var(--bg-color);
+  padding: 20px;
+  width: 80%;
+  max-width: 1000px;
+  margin: 0 auto; 
+}
+
+.productcategory-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.productcategory-nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.productcategory-navlink {
+  background-color: #083644;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 6px 12px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+}
+
+.productcategory-navlink:hover {
+  background-color: #2a2a2a;
+}
+
+.productcategory-subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.productcategory-search {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.productcategory-search-input {
+  width: 100%;
+  max-width: 400px;
+  padding: 8px;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: var(--bg-color);
+}
+
+.productcategory-no-results {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+}
+
+.productcategory-table-wrapper {
+  overflow-x: auto; 
+  margin: 0 auto;
+  width: 100%;
+}
+
+.productcategory-table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 1.2rem;
+}
+
+.productcategory-table-head {
+  background-color: var(--bg-color);
+}
+
+.productcategory-table-row {
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.productcategory-table-header,
+.productcategory-product-cell {
+  padding: 14px;
+  text-align: left;
+}
+
+.productcategory-product-cell {
+  border-bottom: 1px solid #eee;
+}
+
+.productcategory-category-group {
+  margin-bottom: 20px;
+}
+
+.productcategory-category-name {
+  font-size: 1rem;
+  color: #2c3e50;
+  margin-bottom: 8px;
+}
+
+.productcategory-action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end; /* Align action buttons to the right */
+}
+
+.productcategory-view-button,
+.productcategory-delete-button {
+  padding: 5px 10px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border: none;
+  color: #fff;
+}
+
+.productcategory-view-button {
+  background-color: #083644;
+}
+
+.productcategory-view-button:hover {
+  background-color: #2a2a2a;
+}
+
+.productcategory-delete-button {
+  background-color: #e74c3c;
+}
+
+.productcategory-delete-button:hover {
+  background-color: #c0392b;
+}
+
+.productcategory-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.productcategory-pagination-button {
+  margin: 0 10px;
+  padding: 6px 12px;
+  border: none;
+  background-color: #083644;
+  color: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.productcategory-pagination-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.productcategory-pagination-info {
+  font-size: 1rem;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .productcategory-container {
+    width: 90%; /* Reduce width for smaller screens */
+    padding: 15px; /* Adjust padding */
+  }
+
+  .productcategory-title {
+    font-size: 1.5rem; /* Adjust title font size */
+  }
+
+  .productcategory-nav-links {
+    flex-direction: column; /* Stack navigation links */
+    align-items: center;
+    gap: 10px; /* Reduce gap */
+  }
+
+  .productcategory-navlink {
+    font-size: 1rem; /* Adjust font size */
+  }
+
+  .productcategory-subtitle {
+    font-size: 1.2rem; /* Adjust subtitle font size */
+  }
+
+  .productcategory-search-input {
+    max-width: 80%; /* Adjust search input width */
+  }
+
+  .productcategory-table-header, 
+  .productcategory-product-cell {
+    padding: 8px;
+    font-size: 0.9rem; /* Adjust table font size */
+  }
+
+  .productcategory-action-buttons {
+    flex-direction: column; /* Stack action buttons */
+    align-items: flex-end; /* Align to the right */
+    gap: 5px;
+  }
+
+  .productcategory-pagination-info {
+    font-size: 0.9rem; /* Adjust pagination info size */
+  }
+
+  .productcategory-pagination-button {
+    font-size: 0.9rem; /* Adjust button font size */
+    padding: 5px 8px; /* Reduce padding */
+  }
+}

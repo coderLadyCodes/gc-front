@@ -1,0 +1,145 @@
+.expanded-row {
+  background-color: var(--bg-color);
+  }
+.programs-container {
+  padding: 16px;
+  font-family: Arial, sans-serif;
+  background-color: var(--bg-color);
+  background-color: var(--bg-color);
+}
+
+.programs-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #333;
+}
+
+/* Table styling */
+.programs-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.programs-table th, .programs-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.programs-table th {
+  background-color: var(--bg-color);
+  font-weight: bold;
+  color: #343434;
+}
+
+.programs-table td {
+  color: #181818;
+}
+
+
+/* Buttons styling */
+.programs-table button {
+  padding: 6px 12px;
+  margin: 0 4px;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.programs-table button:hover {
+  opacity: 0.8;
+}
+
+.programs-table button:active {
+  transform: scale(0.95);
+}
+
+/* Specific button colors */
+.programs-table button:nth-child(1) {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.programs-table button:nth-child(2) {
+  background-color: #2196f3;
+  color: #fff;
+}
+
+.programs-table button:nth-child(3) {
+  background-color: #f44336;
+  color: #fff;
+}
+
+/* Expanded row styling */
+.programs-table .expanded-row {
+  background-color: #f0f8ff;
+}
+
+.cares-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px 0;
+}
+
+.cares-table th, .cares-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.cares-table th {
+  background-color: #eef;
+  font-weight: bold;
+  color: #555;
+}
+
+.cares-table td {
+  color: #666;
+}
+
+.cares-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .programs-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .programs-table th, .programs-table td,
+  .cares-table th, .cares-table td {
+    padding: 6px;
+    font-size: 0.9rem;
+  }
+
+  .programs-table button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .programs-table,
+  .cares-table {
+    display: block;
+    overflow-x: auto;
+  }
+
+  .programs-table th, .programs-table td,
+  .cares-table th, .cares-table td {
+    display: block;
+    text-align: left;
+    padding: 8px;
+  }
+
+  .programs-container h2 {
+    font-size: 1.2rem;
+  }
+}
+
+  

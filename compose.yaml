@@ -1,0 +1,13 @@
+services:
+
+  gc-front:
+    image: gc-front:1.0.0
+    container_name: gc-front
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external: true
+    name: app-network

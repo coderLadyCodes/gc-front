@@ -1,0 +1,178 @@
+body {
+  overflow-y: auto;
+}
+.client-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+}
+
+.client-title {
+  font-size: 32px;
+  color: #083644;
+  margin-bottom: 20px;
+  text-align: center; 
+  padding-bottom: 10px;
+}
+
+.client-buttons {
+  display: flex;
+  gap: 6rem;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.update-profile-button {
+  background-color: #083644;
+  color: #f5f5f5;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.update-profile-button:hover {
+  opacity: 0.9;
+}
+
+.client-details {
+  display: grid; 
+  grid-template-columns: 1fr 1fr;
+  gap: 10px; 
+  background-color: var(--bg-color);
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(2, 66, 100, 0.4); 
+  border: 1px solid #d6d6d7;
+  width: 100%; 
+  max-width: 800px; 
+  margin-bottom: 20px;
+}
+
+.client-detail {
+  font-size: 16px;
+  color: var(--text-color);
+  margin: 0;
+}
+
+.client-detail strong {
+  color: #083644;
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.client-detail input,
+.client-detail select {
+  width: 100%;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #d6d6d7;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.client-detail input:focus,
+.client-detail select:focus {
+  border-color: #083644;
+  outline: none;
+}
+
+.client-detail input[type="date"] {
+  color: #555;
+}
+
+.client-detail select {
+  background-color: var(--bg-color);
+}
+
+/* Link to "Add Soins" */
+.client-container a {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 16px;
+  color: #083644;
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid #083644;
+  border-radius: 5px;
+  padding: 8px 12px;
+  text-align: center;
+}
+
+.client-container a:hover {
+  background-color: #083644;
+  color: #ffffff;
+}
+
+.client-container a {
+  width: auto; 
+}
+
+.client-outlet {
+  width: 90%;
+  padding: 20px; 
+  overflow-x: auto; 
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .client-details {
+    grid-template-columns: 1fr; 
+  }
+
+  .client-buttons {
+    flex-direction: column; 
+    align-items: center; 
+    gap: 10px;
+  }
+  .client-outlet {
+    padding: 15px; 
+    margin-top: 10px;
+  }
+  
+}
+@media (max-width: 480px) {
+  .client-outlet {
+    padding: 10px; 
+  }
+}
+
+.client-comments {
+  grid-column: 1 / -1; 
+  margin-top: 20px; 
+}
+
+.client-comments strong {
+  display: block; 
+  margin-bottom: 8px;
+  color: #083644;
+}
+
+.client-comments textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #d6d6d7;
+  border-radius: 5px;
+  box-sizing: border-box;
+  resize: vertical; 
+  min-height: 100px; 
+}
+
+.comment-block {
+  padding: 10px;
+  background-color: #f9f9f9;
+  border: 1px solid #d6d6d7;
+  border-radius: 5px;
+  min-height: 100px; 
+  white-space: pre-wrap; 
+  overflow-y: auto;       
+  overflow-x: hidden;     
+  word-wrap: break-word; 
+  font-size: 14px;
+  color: var(--text-color);
+}
+

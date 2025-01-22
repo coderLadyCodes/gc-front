@@ -1,0 +1,202 @@
+
+.programpreviewmodal-container {
+    padding: 20px;
+    width: 100%;
+    height: 90vh;
+   overflow-y: auto; 
+}
+
+.programpreviewmodal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    padding:2px;
+}
+
+.programpreviewmodal-week {
+    margin-top: 10px;
+   /* page-break-before: always;*/
+}
+
+.week-dates {
+    font-weight: bold;
+    margin-bottom: 10px;
+    page-break-before: avoid;
+}
+
+.planning-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    box-shadow: none !important;
+    page-break-inside: avoid;
+}
+
+.planning-table th,
+.planning-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.programpreviewmodal-print-btn {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.programpreviewmodal-print-btn:hover {
+    background-color: #0056b3;
+}
+.programpreviewmodal-header p{
+    color: var(--text-color);
+    margin: 8px;
+}
+.programpreviewmodal-user-details .user-logo{
+    width: 100px;
+    height: 60px;
+  }
+  .programpreviewmodal-title{
+    font-size: 14px;
+  }
+
+  /*@media print {
+    body {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        font-size: 12px;
+    }
+    .programpreviewmodal-container {
+        width: 100%;
+    }
+        .programpreviewmodal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+        padding:2px;
+    }
+        .programpreviewmodal-user-details .user-logo{
+            width: 100px;
+            height: 60px;
+            margin-right: 20px;
+        }
+    .programpreviewmodal-header,
+    .programpreviewmodal-week {
+        page-break-before: auto;
+        page-break-after: avoid;
+         page-break-inside: avoid;
+    }
+    .planning-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+        page-break-before: auto;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+    }
+    .planning-table th,
+    .planning-table td {
+        border: 1px solid #000;
+        padding: 5px;
+        text-align: center;
+        vertical-align: middle;
+    }
+    .planning-table thead {
+        display: table-header-group;
+    }
+    .planning-table tbody tr {
+        page-break-inside: avoid;
+    }
+    .programpreviewmodal-print-btn,
+    .modal-closes {
+        display: none;
+    }
+    @page {
+        size: A4 landscape;
+        margin: 10mm;
+    }
+
+}*/
+ 
+ /* 
+  @media print {
+ 
+      
+   body,
+    html {
+       height: unset !important;
+
+    }
+    body {
+        -webkit-print-color-adjust: exact; 
+        print-color-adjust: exact;
+      }
+   
+    .programpreviewmodal-container {
+        width: 100%;
+        overflow: visible !important;
+        min-height: auto;
+        box-shadow: none !important; 
+
+    }
+    .programpreviewmodal-print-btn,
+    .modal-closes {
+        display: none;
+    }
+    .programpreviewmodal-user-details .user-logo {
+        width: 80px;
+        height: 60px;
+    }
+    
+
+   .programpreviewmodal-header {
+        page-break-before: auto;
+        padding: 10px 0;
+    }
+    .programpreviewmodal-week {
+        margin-bottom: 20px;
+        page-break-after: always; 
+    }
+    .planning-table {
+        page-break-inside: avoid; 
+        break-inside: avoid;
+        width: 100%;
+       border-collapse: collapse;
+       break-after: always; 
+    }
+
+
+    .planning-table th,
+    .planning-table td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+    .planning-table thead {
+        display: table-header-group;
+    }
+    .week-dates {
+        font-weight: bold;
+        margin-bottom: 10px;
+        page-break-after: avoid; 
+    }
+
+    .programpreviewmodal-header p {
+        font-size: 12px;
+    }
+
+    .programpreviewmodal-container > * {
+        page-break-inside: avoid; 
+    }
+   @page {
+        size: A4;
+        margin: 10mm; 
+    } 
+
+} */

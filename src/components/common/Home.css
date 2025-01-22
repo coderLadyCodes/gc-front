@@ -1,0 +1,72 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; 
+    height: 100%;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+  }
+  
+ 
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    padding: 0 20px;
+    background-color: var(--bg-color);
+    color: var(--text-color); 
+    text-align: center;
+  }
+  
+  .home-title {
+    font-size: 2.5em;
+    color: #2a2a2a; 
+    margin-bottom: 20px;
+  }
+  
+  .home-section {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .home-signup-link {
+    color: #ffffff; 
+    text-decoration: none; 
+    background-color: #2a2a2a;
+    padding: 12px 24px;
+    border-radius: 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .home-signup-link:hover {
+    background-color: #083644;
+    transform: scale(1.05); 
+  }
+  
+
+  @media (max-width: 768px) {
+    .home-title {
+      font-size: 2em;
+    }
+  
+    .home-signup-link {
+      font-size: 1em;
+      padding: 10px 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .home-title {
+      font-size: 1.5em;
+    }
+  
+    .home-signup-link {
+      font-size: 0.9em;
+      padding: 8px 16px;
+    }
+  }
+  

@@ -1,0 +1,123 @@
+.planningtable-container {
+  overflow-x: auto;
+  max-width: 100%;
+  background-color: var(--bg-color);
+}
+.planning-table th,
+.planning-table td {
+  padding: 8px;
+  margin: 8px;
+}
+
+.day-row {
+  display: flex;
+  font-size: 12px;
+}
+
+.day-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.actions-column button {
+  margin-top: 6px;
+  background-color:#083644;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  color: #fff;
+  width: 70px;
+  height: 22px; 
+  font-size: 12px;
+  text-align: center; 
+  line-height: 10px;
+}
+
+.planningtable-container .day-column{
+  margin-left: 4px;
+}
+
+.actions-column button:hover{
+  background-color: #fff;
+  color: #083644;
+  border:1px solid #083644;
+}
+
+.planning-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.planning-table {
+  width: 100%;
+  overflow-x: auto; 
+}
+
+.actions-column {
+  display: flex;
+  justify-content: space-between; 
+}
+
+.save-planning-btn {
+  margin-top: 25px;
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.save-planning-btn:hover{
+  background-color: #ec5a4a;
+}
+
+.save-planning-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.planning-container p{
+  color: #e74c3c;
+  font-style: italic;
+  font-weight: 100;
+  font-size: 14px;
+}
+
+.planning-container .impression{
+  margin-top: 6px;
+  margin-bottom: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.planning-container .impression:hover{
+  background-color: #5d915f;
+}
+
+.preview-btn {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.preview-btn:hover {
+  background-color: #0056b3;
+}

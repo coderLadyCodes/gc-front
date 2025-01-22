@@ -1,0 +1,154 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+  }
+  
+ 
+  .connexion-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    padding: 20px;
+    color: #333333; 
+  }
+  
+
+  .connexion-title {
+    font-size: 2em;
+    color: #083644;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+ 
+  .connexion-form {
+    width: 100%;
+    max-width: 400px;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  
+  .connexion-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 1em;
+    margin-bottom: 20px;
+  }
+  
+  .connexion-label {
+    color: #2a2a2a; 
+    font-weight: 500;
+  }
+  
+  .connexion-text-input {
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #aaaaaa; 
+    border-radius: 4px;
+    background-color: #f5f5f5;
+    color: #333333;
+    width: 100%; 
+    box-sizing: border-box;
+  }
+  
+  .connexion-text-input::placeholder {
+    color: #aaaaaa;
+  }
+  
+
+  .forgot-password-link {
+    font-size: 0.875em;
+    color: #083644; 
+    margin-top: 5px;
+  }
+  
+  .forgot-password-link a {
+    color: #083644;
+    text-decoration: none;
+  }
+  
+  .forgot-password-link a:hover {
+    text-decoration: underline;
+  }
+  
+  
+  .connexion-submit-container {
+    text-align: center;
+  }
+  
+  .connexion-submit-btn {
+    width: 100%;
+    padding: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #2a2a2a;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .connexion-submit-btn:hover {
+    background-color: #083644; 
+  }
+
+  .password-container {
+    position: relative;
+  }
+  
+  .toggle-password-icon {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #aaaaaa;
+    font-size: 1.2em;
+    transition: color 0.2s;
+  }
+  
+  .toggle-password-icon:hover {
+    color: #333333;
+  }
+  
+  .password-container .connexion-text-input {
+    padding-right: 40px; /* Add space for the icon */
+  }
+
+  @media (max-width: 768px) {
+    .connexion-container {
+      padding: 10px;
+    }
+  
+    .connexion-title {
+      font-size: 1.8em;
+    }
+  
+    .connexion-form {
+      padding: 20px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .connexion-title {
+      font-size: 1.5em;
+    }
+  
+    .connexion-submit-btn {
+      font-size: 1em;
+      padding: 10px;
+    }
+  }
+
+  

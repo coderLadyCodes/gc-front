@@ -1,0 +1,129 @@
+.add-client-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .add-client-container h2{
+    text-align: center;
+  }
+
+  .add-client-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .add-client-form h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 20px;
+  }
+  
+  .add-client-form label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-color);
+  }
+  
+  .add-client-input {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #aaaaaa; 
+    margin-top: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  .add-client-input:focus {
+    outline: 1px solid #333333; 
+  }
+  
+  .add-client-button {
+    background-color: #083644; 
+    color: white; 
+    padding: 12px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    transition: background-color 0.3s;
+  }
+  
+  .add-client-button:hover {
+    background-color: #2a2a2a; 
+  }
+  
+  .add-client-button:disabled {
+    background-color: #aaaaaa;
+    cursor: not-allowed;
+  }
+  
+  .add-client-error {
+    color: #ff4d4d;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  
+  .add-client-success {
+    color: #083644; 
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+  }
+  .client-cancel-button{
+    background-color: #f4f4f4; 
+    color: #083644; 
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #083644; 
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px; 
+    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+  }
+  .client-cancel-button:hover{
+    background-color: #083644;
+    color: #ffffff;
+    border-color: #083644;
+  }
+  .client-cancel-button:focus{
+    outline: 2px solid #083644;
+  }
+  .add-client-input textarea {
+    resize: vertical; /* Allow resizing vertically */
+    height: 100px; /* Default height */
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #aaaaaa;
+    margin-top: 4px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
+  
+  
+  @media (max-width: 768px) {
+    .add-client-container {
+      padding: 15px;
+    }
+  
+    .add-client-input {
+      font-size: 14px;
+      padding: 8px;
+    }
+  
+    .client-button {
+      font-size: 14px;
+      padding: 10px;
+    }
+    
+  }
+  
