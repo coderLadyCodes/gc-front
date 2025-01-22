@@ -18,7 +18,7 @@ const AddCategory = () => {
 
     const addCategory = useMutation({
         mutationFn: async (newCategory) => {
-            const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/category`, newCategory, {
+            const response = await axios.post(`/api/category`, newCategory, {
             withCredentials: true,
         })
         return response.data

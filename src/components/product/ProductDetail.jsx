@@ -21,7 +21,7 @@ const ProductDetail = () => {
     const {data: product, isLoading, isError, error} = useQuery({
         queryKey: ['product', id],
         queryFn: async () => {
-            const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/product/${id}`, {withCredentials: true,})
+            const response = await axios.get(`/api/product/${id}`, {withCredentials: true,})
             return response.data
         },
         onSuccess: (data) => {
@@ -35,7 +35,7 @@ const ProductDetail = () => {
 
     const updateProduct = useMutation({
       mutationFn: async (updatedProduct) => {
-        await axios.put(`${import.meta.env.VITE_APP_API_URL}/product/${id}`, updatedProduct, { withCredentials: true })
+        await axios.put(`/api/product/${id}`, updatedProduct, { withCredentials: true })
       },
       onSuccess: (data) => {
         if (!productData) {

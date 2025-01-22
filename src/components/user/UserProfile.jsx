@@ -23,7 +23,7 @@ const [genericError, setGenericError] = useState('')
   const { data: userData, isLoading: isUserLoading } = useQuery({
     queryKey: ['user', userId],
     queryFn: async () => {
-      const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/user/${userId}`, { withCredentials: true })
+      const response = await axios.get(`/api/user/${userId}`, { withCredentials: true })
       return response.data
     },
       enabled: !!userId,
@@ -52,7 +52,7 @@ const [genericError, setGenericError] = useState('')
 
 
   const mutation = useMutation({
-    mutationFn:(updatedDetails) => axios.put(`${import.meta.env.VITE_APP_API_URL}/user/${userId}`, updatedDetails,
+    mutationFn:(updatedDetails) => axios.put(`/api/user/${userId}`, updatedDetails,
       {withCredentials: true}),
       onSuccess: (data) => {
         const updatedUser = {

@@ -19,7 +19,7 @@ export const ProductProvider = ({ children }) => {
 
 
   const fetchProducts = async ({ page = 0, size = 20, search = '' }) => {
-    const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/products`, {
+    const response = await axios.get(`/api/products`, {
       params: { page, size, search},
       withCredentials: true,
     })
@@ -38,7 +38,7 @@ export const ProductProvider = ({ children }) => {
 
   const deleteProduct = useMutation({
     mutationFn: async (id) => {
-      await axios.delete(`${import.meta.env.VITE_APP_API_URL}/product/${id}`, {
+      await axios.delete(`/api/product/${id}`, {
         withCredentials: true,
       })
     },

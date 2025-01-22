@@ -20,7 +20,7 @@ const ClientsList = () => {
 
   const getClients = async (page, size, search) => {
     try {
-      const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/clients`,{
+      const response = await axios.get(`/api/clients`,{
         params: { page, size, search},
         withCredentials: true })
       return response.data
@@ -39,7 +39,7 @@ const ClientsList = () => {
   })
 
   const deleteClient = async (id) => {
-    await axios.delete(`${import.meta.env.VITE_APP_API_URL}/client/${id}`, { withCredentials: true })
+    await axios.delete(`/api/client/${id}`, { withCredentials: true })
   }
 
   const deleteMutation = useMutation({

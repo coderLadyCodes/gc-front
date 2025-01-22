@@ -15,7 +15,7 @@ const fetchProgramsByClientId = async ({ queryKey }) => {
     throw new Error("Client ID is required to fetch programs.");
   }
 
-  const { data } = await axios.get(`${import.meta.env.VITE_APP_API_URL}/programs/${clientId}`, {
+  const { data } = await axios.get(`/api/programs/${clientId}`, {
     withCredentials: true,
   });
   return data;
@@ -40,7 +40,7 @@ const Programs = () => {
 
   const deleteProgram = useMutation({
     mutationFn: async (programId) => {
-        await axios.delete(`${import.meta.env.VITE_APP_API_URL}/program/${programId}`, {
+        await axios.delete(`/api/program/${programId}`, {
             withCredentials: true,
         })
     },

@@ -15,7 +15,7 @@ const Categories = () => {
 
 const editCategory = useMutation({
   mutationFn: async ({id, name}) => {
-    await axios.put(`${import.meta.env.VITE_APP_API_URL}/category/${id}`, { name }, { withCredentials: true,})
+    await axios.put(`/api/category/${id}`, { name }, { withCredentials: true,})
   }, 
   onSuccess: () => {
     queryClient.invalidateQueries(['categories'])
@@ -34,7 +34,7 @@ const handleSaveClick = (id) => {
 
 const deleteCategory = useMutation({
   mutationFn: async (categoryId) => {
-      await axios.delete(`${import.meta.env.VITE_APP_API_URL}/category/${categoryId}`, {
+      await axios.delete(`/api/category/${categoryId}`, {
           withCredentials: true,
       })
   },

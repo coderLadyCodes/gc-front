@@ -30,7 +30,7 @@ const AddProduct = () => {
 
   const addProduct = useMutation({
     mutationFn: async (newProduct) => {
-            const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/product`, newProduct, {  withCredentials: true,})
+            const response = await axios.post(`/api/product`, newProduct, {  withCredentials: true,})
    return response.data
     },
     onSuccess: () => {

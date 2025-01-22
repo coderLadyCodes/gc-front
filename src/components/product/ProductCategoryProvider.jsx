@@ -8,7 +8,7 @@ export const useProductCategory = () => useContext(ProductCategoryContext)
 const ProductCategoryProvider = ({ children }) => {
 
     const getCategories = async () => {
-        const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/categories`, {
+        const response = await axios.get(`/api/categories`, {
             withCredentials: true,
         })
         return response.data

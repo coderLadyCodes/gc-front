@@ -43,7 +43,7 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
 
   const saveCareMutation = useMutation({
     mutationFn: async (newCare) => {
-      const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/care`, newCare, {
+      const response = await axios.post(`/api/care`, newCare, {
         withCredentials: true,
       })
       return { data: response.data, newCare }
@@ -121,7 +121,7 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
         } else {
           // If care already has an id, you can update it
         const updatedCare = { ...care, quantity:  Number(care.quantity), carePrice: care.carePrice, programId: program?.id || null,}
-        const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}/care/${care.id}`, updatedCare, {
+        const response = await axios.put(`/api/care/${care.id}`, updatedCare, {
           withCredentials: true,
         })
           savedCares.push(response.data)
@@ -145,13 +145,13 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       }
 
       if (program?.id) {
-         await axios.put(`${import.meta.env.VITE_APP_API_URL}/program/update/${program.id}`, programData, {
+         await axios.put(`/api/program/update/${program.id}`, programData, {
           withCredentials: true,
         })
         alert('Programme mis à jour avec succès!')
       } else {
 
-      await axios.post(`${import.meta.env.VITE_APP_API_URL}/program`, programData, {
+      await axios.post(`/api/program`, programData, {
         withCredentials: true,
       })
       alert('Programme créé avec succès!')

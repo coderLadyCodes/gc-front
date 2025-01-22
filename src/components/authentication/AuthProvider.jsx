@@ -64,7 +64,7 @@ export const AuthProvider = ({children}) => {
   const loginMutation  = useMutation({
     mutationFn: async (credentials) => {
       
-      const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/login`, credentials,{
+      const response = await axios.post(`/api/login`, credentials,{
         headers: {'Content-Type': 'application/json'},
         withCredentials: true, })
         console.log('response:', response)
@@ -95,7 +95,7 @@ export const AuthProvider = ({children}) => {
 
     const logoutMutation  = useMutation({
       mutationFn: async () => {
-        return await axios.post(`${import.meta.env.VITE_APP_API_URL}/logout`,{},
+        return await axios.post(`/api/logout`,{},
           { withCredentials: true, }
         )
       },
@@ -119,7 +119,7 @@ export const AuthProvider = ({children}) => {
   const refreshToken = async () => {
     try {
       console.log('refreshToken')
-        const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/refresh-token`,{},
+        const response = await axios.post(`/api/refresh-token`,{},
         {withCredentials: true}) 
       console.log('Refresh token response:', response.data)
       return response.data

@@ -10,7 +10,7 @@ import ProgramPreviewModal from './ProgramPreviewModal '
 
 const fetchProgramDetails = async ({ queryKey }) => {
   const [_key, programId] = queryKey
-  const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/program/${programId}`, {
+  const response = await axios.get(`/api/program/${programId}`, {
     withCredentials: true,
   })
   return response.data
@@ -19,7 +19,7 @@ const fetchProgramDetails = async ({ queryKey }) => {
 // Save updated program with cares
 const updateProgram = async ({ programId, cares }) => {
   const response = await axios.put(
-    `${import.meta.env.VITE_APP_API_URL}/program/update/${programId}`,
+    `/api/program/update/${programId}`,
     { cares },
     { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
   )

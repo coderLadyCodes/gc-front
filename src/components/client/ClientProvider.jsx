@@ -18,7 +18,7 @@ const ClientProvider = ({children}) => {
   // Add a new client
   const addClient = useMutation({
     mutationFn: async (newClient) => {
-        const response = await axios.post(`${import.meta.env.VITE_APP_API_URL}/client`, newClient, {
+        const response = await axios.post(`/api/client`, newClient, {
             withCredentials: true,
         })
         return response.data
@@ -37,7 +37,7 @@ const ClientProvider = ({children}) => {
         return useQuery({
             queryKey: ['client', id],
             queryFn: async () => {
-                const response = await axios.get(`${import.meta.env.VITE_APP_API_URL}/client/${id}`, {
+                const response = await axios.get(`/api/client/${id}`, {
                     withCredentials: true,  
         }) 
         return response.data  
@@ -54,7 +54,7 @@ const ClientProvider = ({children}) => {
             if (!id) {
                 throw new Error('Client ID is required to update client.')
             }
-            const response = await axios.put(`${import.meta.env.VITE_APP_API_URL}/client/${id}`, updatedData, {
+            const response = await axios.put(`/api/client/${id}`, updatedData, {
                 withCredentials: true,   
         })
         return response.data
