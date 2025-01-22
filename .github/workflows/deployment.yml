@@ -41,7 +41,6 @@ jobs:
         with:
           push: true
           tags: coderlady/${{env.IMAGE}}:${{env.VERSION}}
-
   run-container:
     name: run container
     runs-on: ubuntu-latest
