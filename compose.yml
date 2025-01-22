@@ -4,6 +4,7 @@ services:
     image: coderlady/gc-front:0.0.1
     container_name: gc-front
     restart: always
+    pull_policy: always
     networks:
       - app-network
 
