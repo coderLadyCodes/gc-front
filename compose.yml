@@ -5,6 +5,8 @@ services:
     container_name: gc-front
     restart: always
     pull_policy: always
+    ports:
+      - 91:80
     networks:
       - app-network
 
