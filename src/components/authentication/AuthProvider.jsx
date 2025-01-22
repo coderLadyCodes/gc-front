@@ -39,7 +39,7 @@ export const AuthProvider = ({children}) => {
            return response
          },
                async (error) => {
-               
+               console.log(error)
                if (error.response.status === 412) {
                   await refreshToken()
                   return axios(error.config)
@@ -49,7 +49,8 @@ export const AuthProvider = ({children}) => {
                  return axios(error.config)
               }
                   if (error.response.status === 403) {
-                    logout()
+                    //logout()
+
                }
                return error
         })
