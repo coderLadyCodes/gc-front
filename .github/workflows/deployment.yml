@@ -49,6 +49,9 @@ jobs:
     steps:
       - name: cloner le repertoire
         uses: actions/checkout@master
+      - name: Replace image name in compose.yml
+        run: |
+         sed -i "s|gc-front|coderlady/gc-front:${{ env.VERSION }}|g" compose.ym
       - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.7
         with:
