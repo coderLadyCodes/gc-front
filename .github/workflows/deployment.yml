@@ -49,9 +49,6 @@ jobs:
     steps:
       - name: cloner le repertoire
         uses: actions/checkout@master
-      - name: Replace image name in compose.yml
-        run: |
-         sed -i "s|gc-front|coderlady/gc-front:${{ env.VERSION }}|g" compose.ym
       - name: copy file via ssh key
         uses: appleboy/scp-action@v0.1.7
         with:
@@ -61,15 +58,6 @@ jobs:
           port: 22
           source: "compose.yml"
           target: /opt/applications/gc/${{env.IMAGE}}
-      - name: Docker login on target server
-        uses: appleboy/ssh-action@v1.2.0
-        with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.PRIVATE_KEY }}
-        port: 22
-        script: |
-          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
       - name: execute commands to run container
         uses: appleboy/ssh-action@v1.2.0
         with:
