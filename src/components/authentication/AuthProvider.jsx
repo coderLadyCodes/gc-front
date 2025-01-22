@@ -81,6 +81,7 @@ export const AuthProvider = ({children}) => {
         navigate('/dashboard')
     },
     onError: (error) => {
+      console.error({error})
       console.error({error: JSON.stringify(error)})
       alert('Email ou mot de passe incorrect.')
     },
