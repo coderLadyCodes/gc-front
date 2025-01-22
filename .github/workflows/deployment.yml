@@ -40,7 +40,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: coderlady/gc-front:0.0.1-SNAPSHOT
+          tags: coderlady/${{env.IMAGE}}:${{env.VERSION}}
 
   run-container:
     name: run container
