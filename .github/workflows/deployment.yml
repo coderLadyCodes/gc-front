@@ -67,7 +67,7 @@ jobs:
           port: 22
           script: |
             docker network inspect app-network >/dev/null 2>&1 || docker network create app-network
-            
+            echo VITE_APP_API_URL="${{ secrets.VITE_APP_API_URL}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
          
             docker compose -f /opt/applications/gc/${{env.IMAGE}}/compose.yml up -d
 
