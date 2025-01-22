@@ -2,7 +2,7 @@ name: deploy gc back
 on: [push]
 env:
   IMAGE: gc-front
-  VERSION: 0.0.1-SNAPSHOT
+  VERSION: 1.0.0
 jobs:
   create-folder:
     name: create folder
