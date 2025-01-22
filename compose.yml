@@ -1,7 +1,7 @@
 services:
 
   gc-front:
-    image: gc-front:1.0.0
+    image: coderlady/gc-front:0.0.1
     container_name: gc-front
     restart: always
     networks:

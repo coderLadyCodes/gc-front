@@ -2,7 +2,7 @@ name: deploy gc back
 on: [push]
 env:
   IMAGE: gc-front
-  VERSION: 0.0.1-SNAPSHOT
+  VERSION: 0.0.1
 jobs:
   create-folder:
     name: create folder
@@ -68,16 +68,6 @@ jobs:
           script: |
             docker network inspect app-network >/dev/null 2>&1 || docker network create app-network
             
-            echo DB_HOST="${{ secrets.DB_HOST}}" > /opt/applications/gc/${{env.IMAGE}}/.env
-            echo DB_USERNAME="${{ secrets.DB_USERNAME}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo DB_PASSWORD="${{ secrets.DB_PASSWORD}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo ENCRIPTION_KEY="${{ secrets.ENCRIPTION_KEY}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_PASSWORD="${{ secrets.USER_PASSWORD}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_EMAIL="${{ secrets.USER_EMAIL}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_PHONE="${{ secrets.USER_PHONE}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_NAME="${{ secrets.USER_NAME}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_ROLE="${{ secrets.USER_ROLE}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo USER_ACTIF="${{ secrets.USER_ACTIF}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
-            echo FRONTEND_URL="${{ secrets.FRONTEND_URL}}" >> /opt/applications/gc/${{env.IMAGE}}/.env
+         
             docker compose -f /opt/applications/gc/${{env.IMAGE}}/compose.yml up -d
 
