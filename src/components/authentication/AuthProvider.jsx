@@ -68,15 +68,12 @@ export const AuthProvider = ({children}) => {
       const response = await axios.post(`/api/login`, credentials,{
         headers: {'Content-Type': 'application/json'},
         withCredentials: true, })
-        console.log('response loginMutation:', response)
       return response
       
     },
 
     onSuccess: (data) => {
-        console.log("onsuccess data from loginmutation data:", data)
         const user = { username: JSON.parse(data.config.data).username, userId: data.data.id, phone: data.data.phone, role: data.data.role, name: data.data.userName }
-        console.log("username email:", user.username)
         setAuthData(user)
         localStorage.setItem('user', JSON.stringify(user))
         queryClient.setQueryData(['user', user.userId], user)
