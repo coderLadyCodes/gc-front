@@ -25,7 +25,7 @@ const [genericError, setGenericError] = useState('')
     queryFn: async () => {
       const response = await axios.get(`/api/user/${userId}`, { withCredentials: true })
       return response.data
-      console.log("response userprofile data:", response)
+      console.log("response userprofile data:", response.data)
     },
       enabled: !!userId,
       onSuccess: (data) => {
