@@ -50,7 +50,7 @@ RUN npm run build
 # where the necessary files are copied from the build stage.
 FROM nginx:1.24-alpine
 COPY --from=build /usr/src/app/dist /usr/share/nginx/html
-COPY --from=build /usr/src/app/web-gc.conf /etc/nginx/conf.d/web-gc.conf
+COPY --from=build /usr/src/app/web-gc.conf /etc/nginx/conf.d/default.conf
 
 
 # Expose the port that the application listens on.
