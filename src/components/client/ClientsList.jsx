@@ -30,7 +30,8 @@ const ClientsList = () => {
     }
   }
 
-  const {data, error, isLoading } = useQuery({
+  //const {data, error, isLoading } = useQuery({
+  const { data = { content: [], totalPages: 0 }, error, isLoading, isFetching } = useQuery({
     queryKey: ['clients', page, size, debouncedSearch],
     queryFn: () => getClients(page, size, debouncedSearch),
     keepPreviousData: true,
@@ -60,7 +61,15 @@ const ClientsList = () => {
   }
 
   if (isLoading) return <Spinner />
-  if (error) return <p className='error-message'>{error.message}</p>
+  //if (error) return <p className='error-message'>{error.message}</p>
+  if (error) {
+      return (
+        <div>
+          <p className="error-message">Erreur lors du chargement des clients.</p>
+          <button onClick={() => queryClient.invalidateQueries(['clients'])}>Réessayer</button>
+        </div>
+      );
+    }
 
   const clients = data?.content || []
   const totalPages = data?.totalPages || 0
