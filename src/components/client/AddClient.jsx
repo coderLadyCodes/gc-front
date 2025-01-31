@@ -41,6 +41,7 @@ const AddClient = () => {
     e.preventDefault()
     addClient.mutate(clientDTO, {
       onSuccess: () => {
+        queryClient.invalidateQueries(['clients']); // NOT SURE JUST ADDED
         setClientDTO({
             firstName: '',
             lastName: '',
@@ -108,7 +109,6 @@ const AddClient = () => {
             value={clientDTO.email}
             onChange={handleChange}
             className='add-client-input'
-            
           />
         </label>
         <label>
