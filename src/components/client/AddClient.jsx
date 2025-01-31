@@ -41,7 +41,8 @@ const AddClient = () => {
     e.preventDefault()
     addClient.mutate(clientDTO, {
       onSuccess: () => {
-        queryClient.invalidateQueries(['clients']); // NOT SURE JUST ADDED
+        //queryClient.invalidateQueries(['clients']);  NOT SURE JUST ADDED
+
         setClientDTO({
             firstName: '',
             lastName: '',
