@@ -52,10 +52,10 @@ export const AuthProvider = ({children}) => {
               }
                   if (error.response.status === 403) {
                     //logout() dont uncomment
-
                }
                return error
         })
+
         return () => {
           axios.interceptors.request.eject(requestInterceptor)
           axios.interceptors.response.eject(responseInterseptor)
