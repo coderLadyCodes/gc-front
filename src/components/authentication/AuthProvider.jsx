@@ -41,15 +41,17 @@ export const AuthProvider = ({children}) => {
                async (error) => {
                console.log(error)
                if (error.response.status === 412) {
-                  await refreshToken()
-                  return axios(error.config)
+                  //await refreshToken()
+                  //return axios(error.config)
+                  logout();
                }
                if (error.response.status === 401) {
-                 await refreshToken()
-                 return axios(error.config)
+                 //await refreshToken()
+                 //return axios(error.config)
+                 logout();
               }
                   if (error.response.status === 403) {
-                    //logout()
+                    //logout() dont uncomment
 
                }
                return error
