@@ -3,7 +3,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useMutation, useQueryClient, useQuery} from '@tanstack/react-query'
 
-
 const AuthContext = createContext()
 
 export const AuthProvider = ({children}) => {
@@ -23,7 +22,6 @@ export const AuthProvider = ({children}) => {
   
      useEffect(() => {
       axios.defaults.withCredentials = true
-
         const requestInterceptor = axios.interceptors.request.use(
           (config) => {
             config.withCredentials = true
@@ -63,7 +61,6 @@ export const AuthProvider = ({children}) => {
         }
         
       }, [])
-
 
   const loginMutation  = useMutation({
     mutationFn: async (credentials) => {
