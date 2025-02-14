@@ -166,7 +166,7 @@ useEffect(() => {
 
     </div>
     
-    <Link to='add-care'>Voir ou Ajouter les soins</Link>
+    <Link to='add-care'>Voir / Ajouter les soins</Link>
     <div className='client-outlet'>
      <Outlet />
     </div>

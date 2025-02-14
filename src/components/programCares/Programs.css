@@ -80,14 +80,14 @@
 }
 
 .cares-table {
-  width: 100%;
+  width: 90%;
   border-collapse: collapse;
   margin: 10px 0;
 }
 
 .cares-table th, .cares-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 6px;
   text-align: center;
 }
 

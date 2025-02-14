@@ -1,12 +1,12 @@
 .add-care-container {
   padding: 20px;
-  max-width: 1200px;
+  width: 90%;
   margin: 0 auto;
   background-color: var(--bg-color);
 }
 
 /* Table Styles */
-.add-care-container .care-table {
+.care-table {
   width: 100%;
   margin-bottom: 20px;
   border-collapse: collapse;
@@ -15,10 +15,16 @@
 
 .add-care-container .care-table th,
 .add-care-container .care-table td {
-  padding: 12px 20px;
+  padding: 10px 16px;
   text-align: left;
   border: 1px solid #ddd;
 }
+.care-table input[type="number"] {
+  width: 50px; /* Adjust the width as needed */
+  text-align: center;
+  padding: 5px;
+}
+
 
 /* Header */
 .add-care-container h2 {
@@ -224,6 +230,7 @@ button.remove-care-button:active {
 /* Mobile and Tablet Responsiveness */
 @media (max-width: 768px) {
   .add-care-container h2 {
+  width:70%;
     font-size: 1.3rem;
   }
 
@@ -271,3 +278,4 @@ button.remove-care-button:active {
     gap: 10px;
   }
 }
+

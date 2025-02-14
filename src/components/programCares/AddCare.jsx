@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
@@ -19,6 +19,7 @@ const useDebounce = (value, delay) => {
 }
 
 const AddCare = ({program, onClose, onCaresUpdated }) => {
+  const tableRef = useRef();
   const navigate = useNavigate()
   const { clientId } = useParams()
   const { user } = useAuth()
@@ -75,7 +76,8 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       clientId: clientId,
       userId: userId,
       quantity: 1,
-      carePrice: product.productPrice * 1,
+      //carePrice: product.productPrice * 1,
+      carePrice: parseFloat(product.productPrice),
       programId: program?.id || null,
     }
     setCareFields((prev) => [...prev, newCare])
@@ -104,6 +106,7 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
     // Calculate total price of the program
     const programPrice = careFields.reduce((total, care) => total + parseFloat(care.carePrice || 0), 0)
 
+
     try {
       const savedCares = []
       for (const care of careFields) {
@@ -120,7 +123,7 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
           savedCares.push(response.data)
         } else {
           // If care already has an id, you can update it
-        const updatedCare = { ...care, quantity:  Number(care.quantity), carePrice: care.carePrice, programId: program?.id || null,}
+        const updatedCare = { ...care, quantity:  Number(care.quantity), carePrice: care.carePrice, programId: program?.id || null}
         const response = await axios.put(`/api/care/${care.id}`, updatedCare, {
           withCredentials: true,
         })
@@ -184,10 +187,152 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
   if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
 
+  //PRINT Program
+const handlePrint = () => {
+  const printContent = tableRef.current;
+
+  if (!printContent) {
+    alert("Le contenu de l'impression est introuvable.");
+    return;
+  }
+
+  // Clone the table to manipulate it for print
+  const clonedTable = printContent.cloneNode(true);
+
+  // Find the "Actions" column index
+  const headers = clonedTable.querySelectorAll("th");
+  const actionIndex = Array.from(headers).findIndex(header => header.textContent.trim().toLowerCase() === "actions");
+
+  if (actionIndex !== -1) {
+    // Remove "Actions" header
+    headers[actionIndex].remove();
+
+    // Remove "Actions" column data from each row
+    clonedTable.querySelectorAll("tr").forEach(row => {
+      const cells = row.querySelectorAll("td");
+      if (cells.length > actionIndex) {
+        cells[actionIndex].remove(); // Remove the corresponding data cell in each row
+      }
+    });
+  }
+   // Modify the Total Row style to remove the border
+    const totalRow = clonedTable.querySelector(".total-row");
+    if (totalRow) {
+      totalRow.querySelectorAll("td").forEach(td => {
+        td.style.border = "none"; // Remove the border around the total row
+        td.style.backgroundColor = "transparent"; // Optional: make the background transparent
+      });
+    }
+
+  // Modify the "Quantité" column input width directly with JS if needed
+  const tds = clonedTable.querySelectorAll('td:nth-child(6), th:nth-child(6)');
+
+  tds.forEach(td => {
+    // Find the input inside the 'Quantité' column and adjust its width
+    const input = td.querySelector('input');
+    if (input) {
+      input.style.width = '80%';  // Adjust this value as needed to fit inside the cell
+    }
+    td.style.width = '5%';  // Ensure the 'Quantité' column is also resized
+  });
+
+  // Open print window
+  const printWindow = window.open('', '_blank');
+
+  if (!printWindow) {
+    alert("Impossible d'ouvrir la fenêtre d'impression.");
+    return;
+  }
+
+  printWindow.document.open();
+  printWindow.document.write(`
+    <html>
+      <head>
+        <title>Impression Programme</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            padding: 20px;
+            text-align: center;
+          }
+
+          .print-header {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+          }
+
+          th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: center;
+          }
+
+          th {
+            background-color: #f2f2f2;
+          }
+
+          tr:nth-child(even) {
+            background-color: #f9f9f9;
+          }
+
+          /* Hide UI elements like buttons for print */
+          .addcare-buttons, .modal-closes {
+            display: none;
+          }
+
+          /* Adjust "Quantité" column width for print */
+          td:nth-child(6), th:nth-child(6) {
+            width: 8%;
+            font-size: 12px; /* Smaller font for "Quantité" column */
+          }
+
+          @media print {
+            body {
+              font-size: 12px;
+              padding: 10mm;
+            }
+
+            table {
+              font-size: 12px;
+            }
+
+            td, th {
+              padding: 4px; /* Adjust padding for print */
+            }
+          }
+        </style>
+      </head>
+      <body>
+        <div class="print-header">
+          ${program?.id ? `Programme: ${program.programReference}` : "Programme de Soins"}
+        </div>
+        ${clonedTable.outerHTML}
+      </body>
+    </html>
+  `);
+  printWindow.document.close();
+  printWindow.focus();
+  setTimeout(() => {
+    printWindow.print();
+    printWindow.close();
+  }, 500);
+};
+
+
   return (
     <div className="add-care-container">
-      <h2>{program?.id ? `Modifier le Programme ${program.programReference}` : "Ajouter des soins"}</h2>
-      <table className="care-table">
+      <h2>{program?.id ? `Imprimer / Modifier le Programme ${program.programReference}` : "Ajouter des soins"}</h2>
+      <table className="care-table" id="care-table" ref={tableRef}>
+
       {careFields.length > 0 && (
     <>
         <thead>
@@ -198,7 +343,8 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
             <th>Catégorie</th>
             <th>Prix du Produit</th>
             <th>Quantité</th>
-            <th>Prix Total</th>
+            <th>Prix du soin</th>
+            <th>Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -217,20 +363,46 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
                     const newQuantity = e.target.value;
                     setCareFields((prev) =>
                       prev.map((item, i) => i === index ? { ...item, quantity: newQuantity,
-                          carePrice: item.productDTO.productPrice * newQuantity, } : item))}}min="1"/>
+                           carePrice: item.productDTO.productPrice * newQuantity}: item))
+
+                             // ⬇️ Update the total price when quantity changes
+                                  const newTotal = careFields.reduce(
+                                    (total, care, i) =>
+                                      i === index
+                                        ? total + care.productDTO.productPrice * newQuantity
+                                        : total + care.carePrice,
+                                    0
+                                  );
+
+                                  program.totalProgramPrice = newTotal; // Update program price directly
+
+                           }} min="1"/>
               </td>
-              <td>{care.carePrice.toFixed(2)} €</td>
+{/*                <td>{care.carePrice.toFixed(2)} €</td> */}
+                 <td>{parseFloat(care.carePrice).toFixed(2)} €</td>
+
               <td>
                 <button className='addcare-supp' onClick={() => handleRemoveCare(index)}>Supprimer</button>
               </td>
             </tr>
           ))}
+
+       {/* Total Row */}
+              <tr className="total-row">
+                <td colSpan="6" style={{ textAlign: "right", fontWeight: "bold" }}>Prix Total du Programme:</td>
+                <td style={{ fontWeight: "bold" }}>{program?.totalProgramPrice?.toFixed(2) || '0.00'} €</td>
+                <td></td>
+              </tr>
         </tbody>
         </>)}
+
       </table>
       <div className='addcare-buttons'>
       <button onClick={() => setIsProductModalOpen(true)}>Ajouter un produit</button>
       <button onClick={handleSaveProgram} disabled={careFields.length === 0}>Enregistrer les soins</button>
+         {program?.id && (
+                        <button onClick={handlePrint} className="print-button">Imprimer</button>
+                      )}
      </div>
 
       <Modal isOpen={isProductModalOpen} onClose={() => setIsProductModalOpen(false)}>

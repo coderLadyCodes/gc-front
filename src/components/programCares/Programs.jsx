@@ -100,7 +100,7 @@ const Programs = () => {
               <tr>
                 <td>{program.programReference}</td>
                 <td>{new Date(program.createdDate).toLocaleDateString()}</td>
-                <td>{parseFloat(program.totalProgramPrice).toFixed(2)} €</td>
+                 <td>{parseFloat(program.totalProgramPrice).toFixed(2)} €</td>
                 <td>
                   <button onClick={() => navigate(`/dashboard/client/${clientId}/planning/${program.id}`)}>Planifier</button>
                   <button onClick={() => handleEditProgram(program.id)}>Modifier</button>

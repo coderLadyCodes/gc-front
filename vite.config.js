@@ -14,7 +14,9 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8080',
         changeOrigin: true,
-        rewrite: path => path.replace(/^\/api/, '')
+        //rewrite: path => path.replace(/^\/api/, '')  // THIS IS FOR PRODUCTION
+          secure: false,  // Add this line FOR LOCAL TESTS ONLY (NOT FOR PRODUCTION)
+          rewrite: path => path.replace(/^\/api/, '/api') // Ensure it keeps the "/api" prefix FOR LOCAL TESTS ONLY (NOT FOR PRODUCTION)
       }
     },
     watch: {  // NOT SURE
