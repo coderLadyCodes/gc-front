@@ -11,11 +11,13 @@ const Categories = () => {
   const { categories, isLoading, isError, error } = useProductCategory()
   const [editingCategory, setEditingCategory] = useState(null)
   const [editName, setEditName] = useState("")
-  const queryClient = useQueryClient()
+  const [editTva, setEditTva] = useState('')
+
+  const queryClient = useQueryClient();
 
 const editCategory = useMutation({
-  mutationFn: async ({id, name}) => {
-    await axios.put(`/api/category/${id}`, { name }, { withCredentials: true,})
+  mutationFn: async ({id, name, tva}) => {
+    await axios.put(`/api/category/${id}`, { name, tva }, { withCredentials: true,})
   }, 
   onSuccess: () => {
     queryClient.invalidateQueries(['categories'])
@@ -26,11 +28,18 @@ const editCategory = useMutation({
 const handleEditClick = (category) => {
   setEditingCategory(category.id)
   setEditName(category.name)
+  setEditTva(category.tva)
 }
 
+// const handleSaveClick = (id) => {
+//   editCategory.mutate({ id, name: editName, tva: editTva })
+// }
 const handleSaveClick = (id) => {
-  editCategory.mutate({ id, name: editName })
-}
+  // If editTva is an empty string, set it to null to properly handle "Aucune TVA"
+  const finalTva = editTva === '' ? null : editTva;  // Check if it's empty string and set to null
+  editCategory.mutate({ id, name: editName, tva: finalTva });
+};
+
 
 const deleteCategory = useMutation({
   mutationFn: async (categoryId) => {
@@ -63,11 +72,12 @@ const sortedCategories = [...categories].sort((a,b) => b.id - a.id)
       <NavLink to="/dashboard/add-category">Ajouter une Catégorie</NavLink>
       <Link to="/dashboard/product-category">Retour</Link>
     </div>
-
     <table className="categories-table">
       <thead>
         <tr>
           <th>Catégories de produits</th>
+          <th>TVA</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -75,7 +85,6 @@ const sortedCategories = [...categories].sort((a,b) => b.id - a.id)
           <tr key={category.id}>
             <td>
               {editingCategory === category.id ? (
-                // Show input field in edit mode
                 <input
                   type="text"
                   value={editName}
@@ -86,27 +95,38 @@ const sortedCategories = [...categories].sort((a,b) => b.id - a.id)
                 category.name
               )}
             </td>
+            <td>
+            {editingCategory === category.id ? (
+              <select
+              id="tva"
+              name='tva'
+                value={editTva === null ? '' : editTva} // If editTva is null, show the empty string for "Aucune TVA"
+                onChange={(e) => setEditTva(e.target.value === '' ? null : e.target.value)}>
+{/*                 <option value=''>Aucune TVA</option> */}
+                <option value='TVA5,5%'>TVA 5,5%</option>
+                <option value='TVA20%'>TVA 20%</option>
+              </select>
+            ) : (
+              category.tva || 'sans tva'
+            )}
+          </td>
             <td className="action-buttons">
               {editingCategory === category.id ? (
                 <button
                   className="view-button"
-                  onClick={() => handleSaveClick(category.id)}
-                >
+                  onClick={() => handleSaveClick(category.id)}>
                   Sauvegarder
                 </button>
               ) : (
                 <button
                   className="view-button"
-                  onClick={() => handleEditClick(category)}
-                >
+                  onClick={() => handleEditClick(category)}>
                   Modifier
-                </button>
-              )}
+                </button>)}
               <button
                 className="delete-button"
                 onClick={() => handleDeleteCategory(category.id)}
-                disabled={deleteCategory.isLoading}
-              >
+                disabled={deleteCategory.isLoading}>
                 {deleteCategory.isLoading ? 'Deleting...' : 'Supprimer'}
               </button>
             </td>

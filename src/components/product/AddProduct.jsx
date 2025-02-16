@@ -60,7 +60,7 @@ const AddProduct = () => {
       const selectedCategory = categories.find((cat) => cat.name === value)
       setProductDTO((prevData) => ({
         ...prevData,
-        categoryDTO: selectedCategory ? { id: selectedCategory.id, name: value } : null,
+        categoryDTO: selectedCategory ? { id: selectedCategory.id, name: value, tva: selectedCategory.tva } : null,
       }))
     } else {
       setProductDTO((prevData) => ({
@@ -83,6 +83,12 @@ const AddProduct = () => {
     const formattedProductDTO = {
       ...productDTO,
       productPrice: parseFloat(productDTO.productPrice) || 0,
+       // Make sure you include the category with its tva
+          categoryDTO: productDTO.categoryDTO ? {
+            id: productDTO.categoryDTO.id,
+            name: productDTO.categoryDTO.name,
+            tva: productDTO.categoryDTO.tva,
+          } : null,
     }
     addProduct.mutate(formattedProductDTO)
   }
@@ -172,7 +178,7 @@ const AddProduct = () => {
             <option value=''>Selectionnez une catégorie</option>
             {categories.map((category) => (
               <option key={category.id} value={category.name}>
-                {category.name}
+                {category.name} ({category.tva})
               </option>
             ))}
           </select>

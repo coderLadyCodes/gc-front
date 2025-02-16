@@ -149,14 +149,16 @@ const ProductDetail = () => {
                           setProductData((prevData) => ({
                             ...prevData,
                             categoryDTO: selectedCategoryId
-                              ? { id: selectedCategoryId, name: categories.find((cat) => cat.id === selectedCategoryId)?.name || '' }
+                              ? { id: selectedCategoryId,
+                                  name: categories.find((cat) => cat.id === selectedCategoryId)?.name || '',
+                                  tva: categories.find((cat) => cat.id === selectedCategoryId)?.tva || 'Sans TVA'}
                               : null,
                           }))
                         }}>
                         <option value="">-- Choisir une catégorie --</option>
                         {categories.map((category) => (
                             <option key={category.id} value={category.id}>
-                                {category.name}
+                                {category.name} ({category.tva || 'Sans TVA'})
                             </option>
                         ))}
                     </select>
@@ -169,7 +171,7 @@ const ProductDetail = () => {
                 <p><strong>Type:</strong> {product.type}</p>
                 <p><strong>Référence:</strong> {product.refProduct}</p>
                 <p><strong>Prix:</strong> {product.productPrice.toFixed(2)} €</p>
-                <p><strong>Catégorie:</strong> {product.categoryDTO?.name || 'Sans Catégorie'}</p>
+                <p><strong>Catégorie:</strong> {product.categoryDTO?.name || 'Sans Catégorie'} ({product.categoryDTO?.tva || 'Sans TVA'})</p>
                 <p><strong>Description:</strong></p>
                 <div 
                   className="productdetail-description-card" 

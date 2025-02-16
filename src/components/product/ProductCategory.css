@@ -224,3 +224,7 @@
     padding: 5px 8px; /* Reduce padding */
   }
 }
+.category-tva {
+  font-size: 0.9em;
+  margin-left: 5px;
+}

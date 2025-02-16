@@ -39,11 +39,14 @@ const ProductCategory = () => {
 
    // Group products by category name
    const groupedProducts = productsData?.content?.reduce((groups, product) => {
-    const category = product.categoryDTO?.name || "Sans catégorie" 
+    const category = product.categoryDTO?.name || "Sans catégorie"
+    const tva = product.categoryDTO?.tva || "Sans TVA"
     if (!groups[category]) {
-      groups[category] = []
+      //groups[category] = []
+      groups[category] = { products: [], tva }
     }
-    groups[category].push(product)
+groups[category].products.push(product)
+    //groups[category].push(product)
     return groups
   }, {}) || {}
 
@@ -77,9 +80,10 @@ const ProductCategory = () => {
   {Object.keys(groupedProducts).length === 0 ? (
     <p className='productcategory-no-results'>Aucun produit trouvé.</p>
   ) : (
-    Object.entries(groupedProducts).map(([categoryName, products]) => (
+   // Object.entries(groupedProducts).map(([categoryName, products]) => (
+        Object.entries(groupedProducts).map(([categoryName, { products, tva }]) => (
       <div key={categoryName} className='productcategory-category-group'>
-        <h3 className='productcategory-category-name'>{categoryName}</h3>
+        <h3 className='productcategory-category-name'>{categoryName}<span className="category-tva">({tva})</span></h3>
         <div className='productcategory-table-wrapper'>
         <table className='productcategory-table'>
           <thead className='productcategory-table-head'>

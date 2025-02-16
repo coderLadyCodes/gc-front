@@ -86,6 +86,11 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
   }
 
   const handleRemoveCare = (index) => {
+       if (careFields.length <= 1) {
+          alert("Veuillez le supprimer dans les programmes des soins.");
+          return; // Prevent deletion if only 1 care is left
+        }
+
     const confirmDelete = window.confirm('Voulez-vous vraiment supprimer ce soin ?')
     if (confirmDelete) {
       setCareFields((prev) => prev.filter((_, i) => i !== index))
@@ -353,7 +358,7 @@ const handlePrint = () => {
               <td>{care.productDTO?.name || 'Produit inconnu'}</td>
               <td>{care.productDTO?.type || 'Type inconnu'}</td>
               <td>{care.productDTO?.refProduct || 'Référence inconnue'}</td>
-              <td>{care.productDTO?.categoryDTO?.name || 'Sans Catégorie'}</td>
+              <td>{care.productDTO?.categoryDTO?.name || 'Sans Catégorie'} {care.productDTO?.categoryDTO?.tva ? `(${care.productDTO.categoryDTO.tva})` : ''}</td>
               <td>{care.productDTO?.productPrice.toFixed(2)} €</td>
               <td>
                 <input
@@ -426,7 +431,12 @@ const handlePrint = () => {
               ) : (
                 Object.entries(groupedProducts).map(([categoryName, products]) => (
                   <div key={categoryName} className="product-category-group">
-                    <h4>{categoryName}</h4>
+                    <h4>{categoryName}
+                        {/* Display TVA next to the category name if it's available */}
+                              {products[0]?.categoryDTO?.tva && (
+                                <span> (TVA: {products[0].categoryDTO.tva}%)</span>
+                              )}
+                          </h4>
                     <table className="product-table">
                       <thead>
                         <tr>

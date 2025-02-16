@@ -9,11 +9,12 @@ const AddCategory = () => {
     const navigate = useNavigate()
     const {user} = useAuth()
     const userId = user?.userId
-    const queryClient = useQueryClient()
+    const queryClient = useQueryClient();
 
     const [categoryDTO, setCategoryDTO] = useState({
         userId:userId,
         name: '',
+        tva: '',
     })
 
     const addCategory = useMutation({
@@ -39,8 +40,14 @@ const AddCategory = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-    
-        addCategory.mutate(categoryDTO)   
+      // If TVA is empty, set it to null before submitting
+        const finalCategoryDTO = {
+            ...categoryDTO,
+            tva: categoryDTO.tva === '' ? null : categoryDTO.tva, // Convert empty string to null
+        }
+
+        addCategory.mutate(finalCategoryDTO)  // Submit the modified category
+        //addCategory.mutate(categoryDTO)
         navigate('/dashboard/categories') 
     }
 
@@ -57,6 +64,19 @@ const AddCategory = () => {
                         onChange={handleChange}
                         required
                     />
+                </label>
+                {/* Add the TVA dropdown */}
+                <label>
+                    TVA:
+                    <select
+                        name='tva'
+                        value={categoryDTO.tva}
+                        onChange={handleChange}
+                    >
+                        <option value=''>SANS TVA</option>
+                        <option value='TVA5,5%'>TVA 5,5%</option>
+                        <option value='TVA20%'>TVA 20%</option>
+                    </select>
                 </label>
                 <div className="add-category-actions">
                 <button type='submit' disabled={addCategory.isLoading}>

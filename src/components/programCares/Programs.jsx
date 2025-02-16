@@ -102,9 +102,18 @@ const Programs = () => {
                 <td>{new Date(program.createdDate).toLocaleDateString()}</td>
                  <td>{parseFloat(program.totalProgramPrice).toFixed(2)} €</td>
                 <td>
-                  <button onClick={() => navigate(`/dashboard/client/${clientId}/planning/${program.id}`)}>Planifier</button>
-                  <button onClick={() => handleEditProgram(program.id)}>Modifier</button>
-                  <button onClick={() => handleDelete(program.id)}>Supprimer</button>
+                  <button onClick={() => navigate(`/dashboard/client/${clientId}/planning/${program.id}`)}
+                      disabled={editingProgramId !== null} // Disable when editing
+                          style={{ opacity: editingProgramId !== null ? 0.5 : 1, cursor: editingProgramId !== null ? 'not-allowed' : 'pointer' }}
+                      >Planifier</button>
+                  <button onClick={() => handleEditProgram(program.id)}
+                      disabled={editingProgramId !== null} // Disable when editing
+                          style={{ opacity: editingProgramId !== null ? 0.5 : 1, cursor: editingProgramId !== null ? 'not-allowed' : 'pointer' }}
+                      >Modifier</button>
+                  <button onClick={() => handleDelete(program.id)}
+                        disabled={editingProgramId !== null} // Disable when editing
+                            style={{ opacity: editingProgramId !== null ? 0.5 : 1, cursor: editingProgramId !== null ? 'not-allowed' : 'pointer' }}
+                      >Supprimer</button>
                 </td>
               </tr>
               {expandedProgramId === program.id && (  //! I AM NOT USING THIS: FROM HERE
@@ -130,6 +139,13 @@ const Programs = () => {
                             <td>{parseFloat(care.carePrice).toFixed(2) || 'Prix inconnu'}</td>
                             <td>{care.quantity || 'quantitée inconnue'}</td>
                             <td>{new Date(care.created).toLocaleDateString()}</td>
+                            <td>
+                                  {/* Add TVA here */}
+                                  <span>{care.productDTO?.categoryDTO?.name || 'Sans catégorie'}</span>
+                                  {care.productDTO?.categoryDTO?.tva && (
+                                    <span> (TVA: {care.productDTO.categoryDTO.tva}%)</span>
+                                  )}
+                                </td>
                           </tr>
                         ))}
                       </tbody>
