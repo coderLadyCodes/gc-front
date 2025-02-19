@@ -434,7 +434,7 @@ const handlePrint = () => {
                     <h4>{categoryName}
                         {/* Display TVA next to the category name if it's available */}
                               {products[0]?.categoryDTO?.tva && (
-                                <span> (TVA: {products[0].categoryDTO.tva}%)</span>
+                                <span> (TVA: {products[0].categoryDTO.tva})</span>
                               )}
                           </h4>
                     <table className="product-table">
