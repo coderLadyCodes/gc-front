@@ -669,7 +669,7 @@ useEffect(() => {
 
     </div>
     
-    <Link to='add-care'>Voir / Ajouter les soins</Link>
+    <Link to='add-care'  state={{ clientName: `${clientData.firstName} ${clientData.lastName}` }}>Voir / Ajouter les soins</Link>
     <div className='client-outlet'>
      <Outlet />
     </div>

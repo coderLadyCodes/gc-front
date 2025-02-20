@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import axios from 'axios'
 import Spinner from '../common/Spinner'
@@ -7,6 +7,7 @@ import './AddCare.css'
 import { useAuth } from '../authentication/AuthProvider'
 import {useProductsContext} from '../product/ProductProvider'
 import Modal from '../common/Modal'
+import logo from '../../assets/images/logo.png'
 
 
 const useDebounce = (value, delay) => {
@@ -19,6 +20,8 @@ const useDebounce = (value, delay) => {
 }
 
 const AddCare = ({program, onClose, onCaresUpdated }) => {
+  const location = useLocation()
+  const { clientName } = location.state || {}
   const tableRef = useRef();
   const navigate = useNavigate()
   const { clientId } = useParams()
@@ -192,8 +195,32 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
   if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
 
+  //logo
+const getBase64Image = (imgUrl, callback) => {
+    const img = new Image()
+    img.crossOrigin = 'Anonymous'
+    img.src = imgUrl
+    img.onload = () => {
+        const canvas = document.createElement('canvas')
+        canvas.width = img.width
+        canvas.height = img.height
+        const ctx = canvas.getContext('2d')
+        ctx.drawImage(img, 0, 0)
+        const dataURL = canvas.toDataURL('image/png')
+        callback(dataURL)
+    }
+    img.onerror = (error) => {
+        console.error("Image failed to load:", error);
+        callback(null); // Provide null if image loading fails
+    };
+}
   //PRINT Program
 const handlePrint = () => {
+    getBase64Image(logo, (base64Logo) => { // `logoUrl` should be the path to the logo image
+            if (!base64Logo) {
+                console.error("Logo image not available for printing");
+                return;
+            }
   const printContent = tableRef.current;
 
   if (!printContent) {
@@ -240,6 +267,13 @@ const handlePrint = () => {
     }
     td.style.width = '5%';  // Ensure the 'Quantité' column is also resized
   });
+    // Get the local date formatted in a readable format
+         const currentDate = new Date();
+         const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+             day: '2-digit',
+             month: '2-digit',
+             year: 'numeric'
+         });
 
   // Open print window
   const printWindow = window.open('', '_blank');
@@ -251,78 +285,117 @@ const handlePrint = () => {
 
   printWindow.document.open();
   printWindow.document.write(`
-    <html>
-      <head>
-        <title>Impression Programme</title>
-        <style>
-          body {
-            font-family: Arial, sans-serif;
-            font-size: 14px;
-            line-height: 1.5;
-            padding: 20px;
-            text-align: center;
-          }
+       <html>
+                    <head>
+                        <title>Impression Programme</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                font-size: 14px;
+                                line-height: 1.5;
+                                padding: 20px;
+                                text-align: center;
+                            }
 
-          .print-header {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-          }
+                            .print-header {
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                margin-bottom: 20px;
+                            }
 
-          table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-          }
+                            .print-logo {
+                                max-width: 150px;
+                                height: auto;
+                            }
 
-          th, td {
-            border: 1px solid black;
-            padding: 6px;
-            text-align: center;
-          }
+                            .header-info {
+                                text-align: left;
+                                margin-top: 10px;
+                            }
 
-          th {
-            background-color: #f2f2f2;
-          }
+                            .client-name {
+                                text-align: right;
+                            }
 
-          tr:nth-child(even) {
-            background-color: #f9f9f9;
-          }
+                            .program-details {
+                                text-align: left;
+                                margin-top: 10px;
+                            }
 
-          /* Hide UI elements like buttons for print */
-          .addcare-buttons, .modal-closes {
-            display: none;
-          }
+                            table {
+                                width: 100%;
+                                border-collapse: collapse;
+                                margin-top: 20px;
+                            }
 
-          /* Adjust "Quantité" column width for print */
-          td:nth-child(6), th:nth-child(6) {
-            width: 8%;
-            font-size: 12px; /* Smaller font for "Quantité" column */
-          }
+                            th, td {
+                                border: 1px solid black;
+                                padding: 6px;
+                                text-align: center;
+                            }
 
-          @media print {
-            body {
-              font-size: 12px;
-              padding: 10mm;
-            }
+                            th {
+                                background-color: #f2f2f2;
+                            }
 
-            table {
-              font-size: 12px;
-            }
+                            tr:nth-child(even) {
+                                background-color: #f9f9f9;
+                            }
 
-            td, th {
-              padding: 4px; /* Adjust padding for print */
-            }
-          }
-        </style>
-      </head>
-      <body>
-        <div class="print-header">
-          ${program?.id ? `Programme: ${program.programReference}` : "Programme de Soins"}
-        </div>
-        ${clonedTable.outerHTML}
-      </body>
-    </html>
+                            /* Hide UI elements like buttons for print */
+                            .addcare-buttons, .modal-closes {
+                                display: none;
+                            }
+
+                            /* Adjust "Quantité" column width for print */
+                            td:nth-child(6), th:nth-child(6) {
+                                width: 8%;
+                                font-size: 12px; /* Smaller font for "Quantité" column */
+                            }
+
+                            @media print {
+                                body {
+                                    font-size: 12px;
+                                    padding: 10mm;
+                                }
+
+                                table {
+                                    font-size: 12px;
+                                }
+
+                                td, th {
+                                    padding: 4px; /* Adjust padding for print */
+                                }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="print-header">
+                            <img src="${base64Logo}" class="print-logo" alt="Logo" />
+                            <div class="client-name">
+                            <p>Le: ${formattedDate}</p>
+                            <p>pour: ${clientName || "Client Name"}</p>
+                            </div>
+                        </div>
+
+                        <div class="header-info">
+                            <p><strong>LA THERAPIE DU CHEVEU</strong></p>
+                            <p>300 avenue de Saint André de Codols</p>
+                            <p>30900 NIMES</p>
+                            <p>tel: ${user?.phone || 'N/A'}</p>
+
+                        </div>
+
+                        <div class="program-details">
+                            <p><strong>${program?.id ? `Programme: ${program.programReference}` : "Programme de Soins"}</strong></p>
+                        </div>
+
+                        <div class="print-table">
+                            ${clonedTable.outerHTML}
+                        </div>
+                    </body>
+                </html>
   `);
   printWindow.document.close();
   printWindow.focus();
@@ -330,8 +403,8 @@ const handlePrint = () => {
     printWindow.print();
     printWindow.close();
   }, 500);
+  })
 };
-
 
   return (
     <div className="add-care-container">
@@ -407,7 +480,7 @@ const handlePrint = () => {
       <button onClick={handleSaveProgram} disabled={careFields.length === 0}>Enregistrer les soins</button>
          {program?.id && (
                         <button onClick={handlePrint} className="print-button">Imprimer</button>
-                      )}
+         )}
      </div>
 
       <Modal isOpen={isProductModalOpen} onClose={() => setIsProductModalOpen(false)}>

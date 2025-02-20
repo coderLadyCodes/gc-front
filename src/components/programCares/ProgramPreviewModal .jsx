@@ -51,7 +51,6 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
     })
  
      const getBase64Image = (imgUrl, callback) => {
-        
         const img = new Image()
         img.crossOrigin = 'Anonymous' 
         img.src = imgUrl
@@ -64,10 +63,19 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
           const dataURL = canvas.toDataURL('image/png') 
           callback(dataURL)
         }
+    // If the image fails to load, you could add an error handler
+        img.onerror = (error) => {
+            console.error("Image failed to load:", error);
+            callback(null); // Provide null if image loading fails
+        };
       }
       
       const handlePrint = () => {
         getBase64Image(logo, (base64Logo) => {
+            if (!base64Logo) {
+                       console.error("Logo image not available for printing");
+                       return; // Don't proceed if logo is not available
+                   }
             const modalContent = document.querySelector('.programpreviewmodal-container') // Fetch content
             
             // Clone the modal content to avoid modifying the original DOM
@@ -159,101 +167,16 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
             iframeDoc.close();
     
             iframe.contentWindow.focus();
-            iframe.contentWindow.print();
+            //iframe.contentWindow.print();
+              setTimeout(() => {
+                iframe.contentWindow.print();
+                iframeDoc.print();
+                iframe.contentWindow.close();
+                iframeDoc.close();
+              }, 500);
         });
     };
-    
-    
-      
 
-/*    const handlePrint = () => {
-    const modalContent = document.querySelector('.programpreviewmodal-container')
-
-    const iframe = document.createElement('iframe')
-    iframe.style.position = 'absolute'
-    iframe.style.width = '0px'
-    iframe.style.height = '0px'
-    iframe.style.border = 'none'
-    document.body.appendChild(iframe)
-
-
-    const iframeDoc = iframe.contentWindow.document
-    iframeDoc.open()
-    iframeDoc.write(`
-        <html>
-            <head>
-                <title>Programme Preview</title>
-                <style>
-                    @media print {
-                         body {
-        -webkit-print-color-adjust: exact;
-        print-color-adjust: exact;
-        font-size: 12px;
-    }
-    .programpreviewmodal-container {
-        width: 100%;
-    }
-        .programpreviewmodal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        padding:2px;
-    }
-    
-        .programpreviewmodal-user-details .user-logo{
-            width: 100px;
-            height: 60px;
-            margin-right: 20px;
-        }
-    .programpreviewmodal-header,
-    .programpreviewmodal-week {
-        page-break-before: auto;
-        page-break-after: avoid;
-         page-break-inside: avoid;
-    }
-    .planning-table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-bottom: 20px;
-        page-break-before: auto;
-        page-break-after: avoid;
-        page-break-inside: avoid;
-    }
-    .planning-table th,
-    .planning-table td {
-        border: 1px solid #000;
-        padding: 5px;
-        text-align: center;
-        vertical-align: middle;
-    }
-    .planning-table thead {
-        display: table-header-group;
-    }
-    .planning-table tbody tr {
-        page-break-inside: avoid;
-    }
-    .programpreviewmodal-print-btn,
-    .modal-closes {
-        display: none;
-    }
-    @page {
-        size: A4 landscape;
-        margin: 10mm;
-    }
-                    }
-                </style>
-            </head>
-            <body>${modalContent.innerHTML}</body>
-        </html>
-    `)
-    iframeDoc.close()
-
-    iframe.contentWindow.focus()
-    iframe.contentWindow.print()
-
-}
-*/  
 
     if (!program || !Array.isArray(program.cares)) {
         return <div>Aucun programme disponnible.</div>

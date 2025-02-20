@@ -62,7 +62,7 @@ const Programs = () => {
     const programToEdit = programs.find((program) => program.id === programId)
     if (programToEdit) {
       setEditingProgramId(programId)
-      setEditingProgramData(programToEdit) 
+      setEditingProgramData(programToEdit)
     } else {
       console.error('Program not found')
     }
