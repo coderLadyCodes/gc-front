@@ -12,16 +12,18 @@ const ClientsList = () => {
   const [debouncedSearch, setDebouncedSearch] = useState(search)
   const [page, setPage] = useState(0) 
   const [size, setSize] = useState(20)
+  const [sortBy, setSortBy] = useState("lastName"); // Default sorting by lastName
+  const [direction, setDirection] = useState("asc"); // Default to ascending order
 
   useEffect(() => {
     const handler = setTimeout(() => setDebouncedSearch(search), 800)
     return () => clearTimeout(handler)
   }, [search])
 
-  const getClients = async (page, size, search) => {
+  const getClients = async (page, size, search, sortBy, direction) => {
     try {
       const response = await axios.get(`/api/clients`,{
-        params: { page, size, search},
+        params: { page, size, search, sortBy, direction},
         withCredentials: true })
       return response.data
     } catch (error) {
@@ -32,8 +34,8 @@ const ClientsList = () => {
 
   //const {data, error, isLoading } = useQuery({
   const { data = { content: [], totalPages: 0 }, error, isLoading, isFetching } = useQuery({
-    queryKey: ['clients', page, size, debouncedSearch],
-    queryFn: () => getClients(page, size, debouncedSearch),
+    queryKey: ['clients', page, size, debouncedSearch, sortBy, direction],
+    queryFn: () => getClients(page, size, debouncedSearch, sortBy, direction),
     keepPreviousData: true,
     cacheTime: 5 * 60 * 1000,
     refetchOnWindowFocus: true, // Ensure refetch on window focus

@@ -37,7 +37,10 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
     program?.cares.map((care) => ({
       ...care,
       productDTO: care.productDTO || {},
-      programId: care.programId || program?.id || null, 
+      programId: care.programId || program?.id || null,
+      durationWeeks: care.durationWeeks || 0,  // Default value for duration
+            timeSlot: care.timeSlot || [],  // Default value for timeSlot
+            daysOfWeek: care.daysOfWeek || [],
     })) || []
   )
 
@@ -52,11 +55,15 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       })
       return { data: response.data, newCare }
     },
-    onSuccess: ({ data, newCare }) => { 
+    onSuccess: ({ data, newCare }) => {
       setCareFields((prev) =>
         prev.map((care) =>
-          care === newCare ? { ...care, id: data.id } : care
-        ))  
+          care === newCare ? { ...care, id: data.id,
+               durationWeeks: care.durationWeeks, // Ensure duration is retained
+               daysOfWeek: care.daysOfWeek, // Ensure days is retained
+               timeSlot: care.timeSlot,
+              } : care
+        ))
       queryClient.invalidateQueries(['programs', clientId])
     },
     onError: (error) => {
@@ -64,7 +71,7 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       alert("Une erreur est survenue lors de l'ajout du soin.")
     },
   })
- 
+
 
   const handleAddProductToCare = async (product) => {
   const productExists = careFields.some(care => care.productDTO.id === product.id)
@@ -82,6 +89,10 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       //carePrice: product.productPrice * 1,
       carePrice: parseFloat(product.productPrice),
       programId: program?.id || null,
+       durationWeeks: 0, // Default value for duration
+       timeSlot: [], // Default value for timeSlot
+       daysOfWeek: [], // Default value for days
+
     }
     setCareFields((prev) => [...prev, newCare])
     setIsProductModalOpen(false)
@@ -127,11 +138,24 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
             quantity: care.quantity,
             programId: program?.id || null,
             created: care.created,
+            durationWeeks: care.durationWeeks,
+            timeSlot: care.timeSlot,
+            created: care.created,
           })
           savedCares.push(response.data)
         } else {
           // If care already has an id, you can update it
-        const updatedCare = { ...care, quantity:  Number(care.quantity), carePrice: care.carePrice, programId: program?.id || null}
+        //const updatedCare = { ...care, quantity:  Number(care.quantity), carePrice: care.carePrice, programId: program?.id || null}
+         const updatedCare = {
+                          ...care,
+                          quantity: Number(care.quantity),
+                          carePrice: care.carePrice,
+                          programId: program?.id || null,
+                          durationWeeks: care.durationWeeks,
+                          timeSlot: care.timeSlot,
+                          daysOfWeek: care.daysOfWeek
+                        }
+
         const response = await axios.put(`/api/care/${care.id}`, updatedCare, {
           withCredentials: true,
         })
@@ -140,13 +164,18 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
       }
 
       const programData = {
+          id: program?.id || null, // <-- maybe
         cares: savedCares.map((care) => ({
+             id: care?.id || null,
           clientId: care.clientId,
           userId: care.userId,
           productDTO: care.productDTO,
           carePrice: care.carePrice,
           quantity: care.quantity,
           programId: care.programId,
+          durationWeeks: care.durationWeeks,
+          timeSlot: care.timeSlot,
+          daysOfWeek: care.daysOfWeek,
         })),
         userId: userId,
         clientId: clientId,

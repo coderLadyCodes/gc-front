@@ -23,6 +23,7 @@ const updateProgram = async ({ programId, cares }) => {
     { cares },
     { withCredentials: true, headers: { 'Content-Type': 'application/json' } }
   )
+
   return response.data
 }
 
@@ -39,6 +40,7 @@ const Planning = () => {
     queryFn: fetchProgramDetails,
     enabled: !!programId,
     onSuccess: (data) => {
+
       const savedSelections = {}
 
       // Process the saved care data (if exists)
@@ -62,8 +64,9 @@ const Planning = () => {
           days: weeksData, // Set the days data from the fetched data
         }
       })
-
       setCareSelections(savedSelections) // Set the care selections state with the fetched data
+       //  Save immediately to localStorage
+       localStorage.setItem('careSelections', JSON.stringify(savedSelections))
     },
   })
   const handlePreview = () => {
@@ -81,16 +84,21 @@ const Planning = () => {
   useEffect(() => {
     const savedCareSelections = localStorage.getItem('careSelections')
     if (savedCareSelections) {
-      setCareSelections(JSON.parse(savedCareSelections))
+      //setCareSelections(JSON.parse(savedCareSelections))
+      const parsedSelections = JSON.parse(savedCareSelections);
+      setCareSelections((prev) => ({ ...prev, ...parsedSelections }));
     }
   }, [])
 
   // Save care selections to the backend
   const mutation = useMutation({
     mutationFn: updateProgram,
-    onSuccess: () => {
+    onSuccess: (updatedData) => {
       alert('Planning sauvegardé avec succés !')
       queryClient.invalidateQueries(['program', programId])
+      setTimeout(() => {
+            const cachedData = queryClient.getQueryData(['program', programId]);
+          }, 1000); // Wait for re-fetch
     },
     onError: (err) => {
       console.error('Failed to save planning:', err)

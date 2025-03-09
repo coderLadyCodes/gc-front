@@ -62,7 +62,11 @@ const Programs = () => {
     const programToEdit = programs.find((program) => program.id === programId)
     if (programToEdit) {
       setEditingProgramId(programId)
-      setEditingProgramData(programToEdit)
+      //setEditingProgramData(programToEdit)
+      setEditingProgramData({
+            ...programToEdit,
+            cares: programToEdit.cares || [], // Ensure cares are included
+          })
     } else {
       console.error('Program not found')
     }
@@ -71,6 +75,7 @@ const Programs = () => {
 
   const handleCaresUpdated = () => {
     queryClient.invalidateQueries(['programs', clientId])
+     queryClient.invalidateQueries(['program', editingProgramId]); // Ensure the selected program also updates
     setEditingProgramId(null)
   }
 
