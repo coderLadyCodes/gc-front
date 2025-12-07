@@ -185,6 +185,7 @@ const Planning = () => {
         })
       })
 
+
       return {
         id: care.id,
         clientId: care.clientId,
@@ -215,7 +216,10 @@ const Planning = () => {
     SUNDAY: 'D',
   }
 
- 
+ // 🌈 Get category color from localStorage by category ID
+ const getCategoryColor = (categoryId) => {
+   return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+ };
 
   // Loading and error states
   if (isLoading) return <Spinner />
@@ -261,6 +265,19 @@ const Planning = () => {
                   <td> 
                     <Link to={`/dashboard/product-detail/${care.productDTO.id}`}>
                       {care.productDTO?.name || 'soins inconnu'}</Link>
+                      {care.productDTO?.categoryDTO?.id && (
+                          <span
+                            style={{
+                              display: 'inline-block',
+                              width: '12px',
+                              height: '12px',
+                              borderRadius: '50%',
+                              backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+                              marginLeft: '8px',
+                              verticalAlign: 'middle',
+                            }}
+                          ></span>
+                        )}
                   </td>
                   {[...Array(careWeeks)].map((_, weekIndex) => (
                     <td key={weekIndex}>

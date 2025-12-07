@@ -50,6 +50,12 @@ groups[category].products.push(product)
     return groups
   }, {}) || {}
 
+// 🌈 color in localStorage with category ID
+const getCategoryColor = (categoryId) => {
+  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+};
+
+
   if (isLoading) return <Spinner />
   if (isError) return <p className='error-message'>{error.message || 'Une erreur est survenue.'}</p>
 
@@ -83,7 +89,11 @@ groups[category].products.push(product)
    // Object.entries(groupedProducts).map(([categoryName, products]) => (
         Object.entries(groupedProducts).map(([categoryName, { products, tva }]) => (
       <div key={categoryName} className='productcategory-category-group'>
-        <h3 className='productcategory-category-name'>{categoryName}<span className="category-tva">({tva})</span></h3>
+        <h3 className='productcategory-category-name'
+        style={{
+            borderLeft: `12px solid ${getCategoryColor(products[0].categoryDTO.id)}`,
+            paddingLeft: "10px"
+          }}>{categoryName}<span className="category-tva">({tva})</span></h3>
         <div className='productcategory-table-wrapper'>
         <table className='productcategory-table'>
           <thead className='productcategory-table-head'>
@@ -97,7 +107,17 @@ groups[category].products.push(product)
           <tbody className='productcategory-table-body'>
             {products.map((product) => (
               <tr key={product.id} className='productcategory-product-row'>
-                <td className='productcategory-product-cell'>{product.name}</td>
+                <td className='productcategory-product-cell'>
+                <span
+                    style={{
+                      display: "inline-block",
+                      width: "12px",
+                      height: "12px",
+                      borderRadius: "50%",
+                      backgroundColor: getCategoryColor(product.categoryDTO.id),
+                      marginRight: "8px"
+                    }}
+                  ></span>{product.name}</td>
                 <td className='productcategory-product-cell'>{product.type}</td>
                 <td className='productcategory-product-cell'>{product.refProduct}</td>
                 <td className='productcategory-product-cell'>{product.productPrice ? parseFloat(product.productPrice).toFixed(2) : '0.00'} €</td>

@@ -90,6 +90,11 @@ const ProductDetail = () => {
     }
   }
 
+// 🌈 color in localStorage with category ID
+const getCategoryColor = (categoryId) => {
+  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+}
+
     if (isLoading) return <Spinner />
     if (isError) return <p className='error-message'>{error.message || 'Une erreur est survenue.'}</p>
 
@@ -162,6 +167,18 @@ const ProductDetail = () => {
                             </option>
                         ))}
                     </select>
+                    {productData.categoryDTO?.id && (
+                        <span
+                          style={{
+                            display: 'inline-block',
+                            width: '12px',
+                            height: '12px',
+                            borderRadius: '50%',
+                            backgroundColor: getCategoryColor(productData.categoryDTO.id),
+                            marginLeft: '8px'
+                          }}
+                        ></span>
+                      )}
                 </p>
                 <button className="productdetail-button" onClick={handleSave}>Enregistrer</button>
             </div>
@@ -171,7 +188,20 @@ const ProductDetail = () => {
                 <p><strong>Type:</strong> {product.type}</p>
                 <p><strong>Référence:</strong> {product.refProduct}</p>
                 <p><strong>Prix:</strong> {product.productPrice.toFixed(2)} €</p>
-                <p><strong>Catégorie:</strong> {product.categoryDTO?.name || 'Sans Catégorie'} ({product.categoryDTO?.tva || 'Sans TVA'})</p>
+                <p><strong>Catégorie:</strong> {product.categoryDTO?.name || 'Sans Catégorie'} ({product.categoryDTO?.tva || 'Sans TVA'})
+                 {/* 🌈 Color Tag */}
+                    {product.categoryDTO?.id && (
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '50%',
+                          backgroundColor: getCategoryColor(product.categoryDTO.id),
+                          marginLeft: '8px'
+                        }}
+                      ></span>
+                    )}</p>
                 <p><strong>Description:</strong></p>
                 <div 
                   className="productdetail-description-card" 

@@ -185,6 +185,10 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
       if (isClientLoading) {
         return <div>Loading client details...</div>
       }
+  // 🌈 color in localStorage with category ID
+  const getCategoryColor = (categoryId) => {
+    return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+  }
 
   return (
     <Modal isOpen={!!program} onClose={onClose}>
@@ -230,6 +234,19 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
                                                         week[day]?.includes(timeSlot) ? (
                                                             <div key={care.id}>
                                                                 {care.productDTO?.name || 'Unknown Care'}
+                                                                {care.productDTO?.categoryDTO?.id && (
+                                                                          <span
+                                                                            style={{
+                                                                              display: 'inline-block',
+                                                                              width: '12px',
+                                                                              height: '12px',
+                                                                              borderRadius: '50%',
+                                                                              backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+                                                                              marginLeft: '5px',
+                                                                              verticalAlign: 'middle',
+                                                                            }}
+                                                                          ></span>
+                                                                        )}
                                                             </div>
                                                         ) : null
                                                     )}

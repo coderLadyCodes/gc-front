@@ -243,197 +243,386 @@ const getBase64Image = (imgUrl, callback) => {
         callback(null); // Provide null if image loading fails
     };
 }
-  //PRINT Program
+//   //PRINT Program
+// const handlePrint = () => {
+//     getBase64Image(logo, (base64Logo) => { // `logoUrl` should be the path to the logo image
+//             if (!base64Logo) {
+//                 console.error("Logo image not available for printing");
+//                 return;
+//             }
+//   const printContent = tableRef.current;
+//
+//   if (!printContent) {
+//     alert("Le contenu de l'impression est introuvable.");
+//     return;
+//   }
+//
+//   // Clone the table to manipulate it for print
+//   const clonedTable = printContent.cloneNode(true);
+//
+// // ⭐ Add or rebuild category color bubble for print
+// clonedTable.querySelectorAll("td[data-category-id]").forEach(td => {
+//   const categoryId = td.getAttribute("data-category-id");
+//   if (!categoryId) return;
+//
+//   const color = getCategoryColor(categoryId);
+//
+//   const bubble = document.createElement("span");
+//   bubble.style.cssText = `
+//     display:inline-block;
+//     width:12px;
+//     height:12px;
+//     border-radius:50%;
+//     background:${color};
+//     margin-left:8px;
+//     vertical-align:middle;
+//   `;
+//
+//   td.appendChild(bubble);
+// });
+//
+//
+//
+//   // Find the "Actions" column index
+//   const headers = clonedTable.querySelectorAll("th");
+//   const actionIndex = Array.from(headers).findIndex(header => header.textContent.trim().toLowerCase() === "actions");
+//
+//   if (actionIndex !== -1) {
+//     // Remove "Actions" header
+//     headers[actionIndex].remove();
+//
+//     // Remove "Actions" column data from each row
+//     clonedTable.querySelectorAll("tr").forEach(row => {
+//       const cells = row.querySelectorAll("td");
+//       if (cells.length > actionIndex) {
+//         cells[actionIndex].remove(); // Remove the corresponding data cell in each row
+//       }
+//     });
+//   }
+//    // Modify the Total Row style to remove the border
+//     const totalRow = clonedTable.querySelector(".total-row");
+//     if (totalRow) {
+//       totalRow.querySelectorAll("td").forEach(td => {
+//         td.style.border = "none"; // Remove the border around the total row
+//         td.style.backgroundColor = "transparent"; // Optional: make the background transparent
+//       });
+//     }
+//
+//   // Modify the "Quantité" column input width directly with JS if needed
+//   const tds = clonedTable.querySelectorAll('td:nth-child(6), th:nth-child(6)');
+//
+//   tds.forEach(td => {
+//     // Find the input inside the 'Quantité' column and adjust its width
+//     const input = td.querySelector('input');
+//     if (input) {
+//       input.style.width = '80%';  // Adjust this value as needed to fit inside the cell
+//     }
+//     td.style.width = '5%';  // Ensure the 'Quantité' column is also resized
+//   });
+//     // Get the local date formatted in a readable format
+//          const currentDate = new Date();
+//          const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+//              day: '2-digit',
+//              month: '2-digit',
+//              year: 'numeric'
+//          });
+//
+//
+//   // Open print window
+//   const printWindow = window.open('', '_blank');
+//
+//   if (!printWindow) {
+//     alert("Impossible d'ouvrir la fenêtre d'impression.");
+//     return;
+//   }
+//
+//   printWindow.document.open();
+//   printWindow.document.write(`
+//        <html>
+//                     <head>
+//                         <title>Impression Programme</title>
+//                         <style>
+//                             body {
+//                                 font-family: Arial, sans-serif;
+//                                 font-size: 14px;
+//                                 line-height: 1.5;
+//                                 padding: 20px;
+//                                 text-align: center;
+//                             }
+//
+//
+//                             .print-header {
+//                                 display: flex;
+//                                 justify-content: space-between;
+//                                 align-items: center;
+//                                 margin-bottom: 20px;
+//                             }
+//
+//                             .print-logo {
+//                                 max-width: 150px;
+//                                 height: auto;
+//                             }
+//
+//                             .header-info {
+//                                 text-align: left;
+//                                 margin-top: 10px;
+//                             }
+//
+//                             .client-name {
+//                                 text-align: right;
+//                             }
+//
+//                             .program-details {
+//                                 text-align: left;
+//                                 margin-top: 10px;
+//                             }
+//
+//                             table {
+//                                 width: 100%;
+//                                 border-collapse: collapse;
+//                                 margin-top: 20px;
+//                             }
+//
+//                             th, td {
+//                                 border: 1px solid black;
+//                                 padding: 6px;
+//                                 text-align: center;
+//                             }
+//
+//                             th {
+//                                 background-color: #f2f2f2;
+//                             }
+//
+//                             tr:nth-child(even) {
+//                                 background-color: #f9f9f9;
+//                             }
+//
+//                             /* Hide UI elements like buttons for print */
+//                             .addcare-buttons, .modal-closes {
+//                                 display: none;
+//                             }
+//
+//                             /* Adjust "Quantité" column width for print */
+//                             td:nth-child(6), th:nth-child(6) {
+//                                 width: 8%;
+//                                 font-size: 12px; /* Smaller font for "Quantité" column */
+//                             }
+//
+//                             @media print {
+//                                 body {
+//                                     font-size: 12px;
+//                                     padding: 10mm;
+//                                 }
+//
+//                                 table {
+//                                     font-size: 12px;
+//                                 }
+//
+//                                 td, th {
+//                                     padding: 4px; /* Adjust padding for print */
+//                                 }
+//                             }
+//                         </style>
+//                     </head>
+//                     <body>
+//                         <div class="print-header">
+//                             <img src="${base64Logo}" class="print-logo" alt="Logo" />
+//                             <div class="client-name">
+//                             <p>Le: ${formattedDate}</p>
+//                             <p>pour: ${clientName || "Client Name"}</p>
+//                             </div>
+//                         </div>
+//
+//                         <div class="header-info">
+//                             <p><strong>LA THERAPIE DU CHEVEU</strong></p>
+//                             <p>300 avenue de Saint André de Codols</p>
+//                             <p>30900 NIMES</p>
+//                             <p>tel: ${user?.phone || 'N/A'}</p>
+//
+//                         </div>
+//
+//                         <div class="program-details">
+//                             <p><strong>${program?.id ? `Programme: ${program.programReference}` : "Programme de Soins"}</strong></p>
+//                         </div>
+//
+//                         <div class="print-table">
+//                             ${clonedTable.outerHTML}
+//                         </div>
+//                     </body>
+//                 </html>
+//   `);
+//   printWindow.document.close();
+//   printWindow.focus();
+//   setTimeout(() => {
+//     printWindow.print();
+//     printWindow.close();
+//   }, 500);
+//   })
+// };
+
+// PRINT Program — replace your current handlePrint with this
 const handlePrint = () => {
-    getBase64Image(logo, (base64Logo) => { // `logoUrl` should be the path to the logo image
-            if (!base64Logo) {
-                console.error("Logo image not available for printing");
-                return;
-            }
-  const printContent = tableRef.current;
+  getBase64Image(logo, (base64Logo) => {
+    if (!base64Logo) {
+      console.error("Logo image not available for printing");
+      return;
+    }
 
-  if (!printContent) {
-    alert("Le contenu de l'impression est introuvable.");
-    return;
-  }
+    const printContent = tableRef.current;
+    if (!printContent) {
+      alert("Le contenu de l'impression est introuvable.");
+      return;
+    }
 
-  // Clone the table to manipulate it for print
-  const clonedTable = printContent.cloneNode(true);
+    // Clone the table to manipulate it for print
+    const clonedTable = printContent.cloneNode(true);
 
-  // Find the "Actions" column index
-  const headers = clonedTable.querySelectorAll("th");
-  const actionIndex = Array.from(headers).findIndex(header => header.textContent.trim().toLowerCase() === "actions");
+    // Helper to create an inline SVG circle (prints reliably)
+    const createColorDotSVG = (color, size = 12) => {
+      const svgNS = "http://www.w3.org/2000/svg";
+      const svg = document.createElementNS(svgNS, "svg");
+      svg.setAttribute("width", String(size));
+      svg.setAttribute("height", String(size));
+      svg.setAttribute("viewBox", `0 0 ${size} ${size}`);
+      svg.setAttribute("style", "display:inline-block; vertical-align:middle; margin-left:8px;");
+      const circle = document.createElementNS(svgNS, "circle");
+      const r = Math.floor(size / 2);
+      circle.setAttribute("cx", String(r));
+      circle.setAttribute("cy", String(r));
+      circle.setAttribute("r", String(r));
+      circle.setAttribute("fill", color);
+      svg.appendChild(circle);
+      return svg;
+    };
 
-  if (actionIndex !== -1) {
-    // Remove "Actions" header
-    headers[actionIndex].remove();
+    // Re-apply color dots for any element that has data-category-id (td or span)
+    // Try both td[data-category-id] and spans inside cells (robust)
+    const selector = '[data-category-id]';
+    // ❌ Remove existing UI bubbles to avoid duplicates
+    clonedTable.querySelectorAll(".ui-category-bubble").forEach(el => el.remove());
 
-    // Remove "Actions" column data from each row
-    clonedTable.querySelectorAll("tr").forEach(row => {
-      const cells = row.querySelectorAll("td");
-      if (cells.length > actionIndex) {
-        cells[actionIndex].remove(); // Remove the corresponding data cell in each row
-      }
+    const targets = clonedTable.querySelectorAll(selector);
+    targets.forEach(target => {
+      const categoryId = target.getAttribute('data-category-id');
+      if (!categoryId) return;
+      // Use same helper getCategoryColor function (from your component)
+      const color = getCategoryColor(categoryId) || '#999999';
+      const svg = createColorDotSVG(color, 12);
+      // append the SVG node into the cloned DOM next to the text
+      target.appendChild(svg);
     });
-  }
-   // Modify the Total Row style to remove the border
-    const totalRow = clonedTable.querySelector(".total-row");
-    if (totalRow) {
-      totalRow.querySelectorAll("td").forEach(td => {
-        td.style.border = "none"; // Remove the border around the total row
-        td.style.backgroundColor = "transparent"; // Optional: make the background transparent
+
+    // Remove "Actions" column (same logic as before)
+    const headers = clonedTable.querySelectorAll("th");
+    const actionIndex = Array.from(headers).findIndex(h => h.textContent.trim().toLowerCase() === "actions");
+    if (actionIndex !== -1) {
+      headers[actionIndex].remove();
+      clonedTable.querySelectorAll("tr").forEach(row => {
+        const cells = row.querySelectorAll("td");
+        if (cells.length > actionIndex) {
+          cells[actionIndex].remove();
+        }
       });
     }
 
-  // Modify the "Quantité" column input width directly with JS if needed
-  const tds = clonedTable.querySelectorAll('td:nth-child(6), th:nth-child(6)');
-
-  tds.forEach(td => {
-    // Find the input inside the 'Quantité' column and adjust its width
-    const input = td.querySelector('input');
-    if (input) {
-      input.style.width = '80%';  // Adjust this value as needed to fit inside the cell
+    // Tweak total-row style (optional)
+    const totalRow = clonedTable.querySelector(".total-row");
+    if (totalRow) {
+      totalRow.querySelectorAll("td").forEach(td => {
+        td.style.border = "none";
+        td.style.backgroundColor = "transparent";
+      });
     }
-    td.style.width = '5%';  // Ensure the 'Quantité' column is also resized
+
+    // Adjust quantity column inputs in cloned table
+    const tds = clonedTable.querySelectorAll('td:nth-child(6), th:nth-child(6)');
+    tds.forEach(td => {
+      const input = td.querySelector('input');
+      if (input) input.style.width = '80%';
+      td.style.width = '5%';
+    });
+
+    // Format date
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+      day: '2-digit', month: '2-digit', year: 'numeric'
+    });
+
+    // Open print window and write HTML (including -webkit-print-color-adjust)
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) {
+      alert("Impossible d'ouvrir la fenêtre d'impression.");
+      return;
+    }
+
+    const printCss = `
+      <style>
+        body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.5; padding: 20px; text-align: center; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+        .print-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:20px; }
+        .print-logo { max-width:150px; height:auto; }
+        table { width:100%; border-collapse:collapse; margin-top:20px; }
+        th, td { border:1px solid black; padding:6px; text-align:center; }
+        th { background-color:#f2f2f2; }
+        tr:nth-child(even) { background-color:#f9f9f9; }
+        /* hide UI elements */
+        .addcare-buttons, .modal-closes, .print-button { display:none; }
+        td svg { /* ensure svg circles are visible and not scaled weird */ vertical-align: middle; }
+        @media print {
+          @page { size: A4 portrait; margin: 10mm; }
+          body { font-size: 12px; padding: 10mm; }
+        }
+      </style>
+    `;
+
+    printWindow.document.open();
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Impression Programme</title>
+          ${printCss}
+        </head>
+        <body>
+          <div class="print-header">
+            <img src="${base64Logo}" class="print-logo" alt="Logo" />
+            <div class="client-name">
+              <p>Le: ${formattedDate}</p>
+              <p>pour: ${clientName || 'Client Name'}</p>
+            </div>
+          </div>
+
+          <div class="header-info">
+            <p><strong>LA THERAPIE DU CHEVEU</strong></p>
+            <p>300 avenue de Saint André de Codols</p>
+            <p>30900 NIMES</p>
+            <p>tel: ${user?.phone || 'N/A'}</p>
+          </div>
+
+          <div class="program-details">
+            <p><strong>${program?.id ? `Programme: ${program.programReference}` : 'Programme de Soins'}</strong></p>
+          </div>
+
+          <div class="print-table">
+            ${clonedTable.outerHTML}
+          </div>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+
+    // Allow some time for resources to render, then print
+    setTimeout(() => {
+      printWindow.print();
+      printWindow.close();
+    }, 500);
   });
-    // Get the local date formatted in a readable format
-         const currentDate = new Date();
-         const formattedDate = currentDate.toLocaleDateString('fr-FR', {
-             day: '2-digit',
-             month: '2-digit',
-             year: 'numeric'
-         });
-
-  // Open print window
-  const printWindow = window.open('', '_blank');
-
-  if (!printWindow) {
-    alert("Impossible d'ouvrir la fenêtre d'impression.");
-    return;
-  }
-
-  printWindow.document.open();
-  printWindow.document.write(`
-       <html>
-                    <head>
-                        <title>Impression Programme</title>
-                        <style>
-                            body {
-                                font-family: Arial, sans-serif;
-                                font-size: 14px;
-                                line-height: 1.5;
-                                padding: 20px;
-                                text-align: center;
-                            }
-
-                            .print-header {
-                                display: flex;
-                                justify-content: space-between;
-                                align-items: center;
-                                margin-bottom: 20px;
-                            }
-
-                            .print-logo {
-                                max-width: 150px;
-                                height: auto;
-                            }
-
-                            .header-info {
-                                text-align: left;
-                                margin-top: 10px;
-                            }
-
-                            .client-name {
-                                text-align: right;
-                            }
-
-                            .program-details {
-                                text-align: left;
-                                margin-top: 10px;
-                            }
-
-                            table {
-                                width: 100%;
-                                border-collapse: collapse;
-                                margin-top: 20px;
-                            }
-
-                            th, td {
-                                border: 1px solid black;
-                                padding: 6px;
-                                text-align: center;
-                            }
-
-                            th {
-                                background-color: #f2f2f2;
-                            }
-
-                            tr:nth-child(even) {
-                                background-color: #f9f9f9;
-                            }
-
-                            /* Hide UI elements like buttons for print */
-                            .addcare-buttons, .modal-closes {
-                                display: none;
-                            }
-
-                            /* Adjust "Quantité" column width for print */
-                            td:nth-child(6), th:nth-child(6) {
-                                width: 8%;
-                                font-size: 12px; /* Smaller font for "Quantité" column */
-                            }
-
-                            @media print {
-                                body {
-                                    font-size: 12px;
-                                    padding: 10mm;
-                                }
-
-                                table {
-                                    font-size: 12px;
-                                }
-
-                                td, th {
-                                    padding: 4px; /* Adjust padding for print */
-                                }
-                            }
-                        </style>
-                    </head>
-                    <body>
-                        <div class="print-header">
-                            <img src="${base64Logo}" class="print-logo" alt="Logo" />
-                            <div class="client-name">
-                            <p>Le: ${formattedDate}</p>
-                            <p>pour: ${clientName || "Client Name"}</p>
-                            </div>
-                        </div>
-
-                        <div class="header-info">
-                            <p><strong>LA THERAPIE DU CHEVEU</strong></p>
-                            <p>300 avenue de Saint André de Codols</p>
-                            <p>30900 NIMES</p>
-                            <p>tel: ${user?.phone || 'N/A'}</p>
-
-                        </div>
-
-                        <div class="program-details">
-                            <p><strong>${program?.id ? `Programme: ${program.programReference}` : "Programme de Soins"}</strong></p>
-                        </div>
-
-                        <div class="print-table">
-                            ${clonedTable.outerHTML}
-                        </div>
-                    </body>
-                </html>
-  `);
-  printWindow.document.close();
-  printWindow.focus();
-  setTimeout(() => {
-    printWindow.print();
-    printWindow.close();
-  }, 500);
-  })
 };
+
+
+// 🌈 color in localStorage with category ID
+const getCategoryColor = (categoryId) => {
+  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+}
 
   return (
     <div className="add-care-container">
@@ -457,10 +646,56 @@ const handlePrint = () => {
         <tbody>
           {careFields.map((care, index) => (
             <tr key={index}>
-              <td>{care.productDTO?.name || 'Produit inconnu'}</td>
+{/*               <td>{care.productDTO?.name || 'Produit inconnu'} */}
+{/*                   {care.productDTO?.categoryDTO?.id && ( */}
+{/*                       <span */}
+{/*                       //data-category-id={care.productDTO.categoryDTO.id} */}
+{/*                         style={{ */}
+{/*                           display: 'inline-block', */}
+{/*                           width: '12px', */}
+{/*                           height: '12px', */}
+{/*                           borderRadius: '50%', */}
+{/*                           backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id), */}
+{/*                           marginLeft: '8px', */}
+{/*                           verticalAlign: 'middle', */}
+{/*                         }} */}
+{/*                       ></span> */}
+{/*                     )}</td> */}
+                <td data-category-id={care.productDTO?.categoryDTO?.id || ""}>
+                  {care.productDTO?.name || 'Produit inconnu'}
+
+                  {care.productDTO?.categoryDTO?.id && (
+                    <span className="ui-category-bubble"
+                      style={{
+                        display: 'inline-block',
+                        width: '12px',
+                        height: '12px',
+                        borderRadius: '50%',
+                        backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+                        marginLeft: '8px',
+                        verticalAlign: 'middle',
+                      }}
+                    ></span>
+                  )}
+                </td>
+
               <td>{care.productDTO?.type || 'Type inconnu'}</td>
               <td>{care.productDTO?.refProduct || 'Référence inconnue'}</td>
-              <td>{care.productDTO?.categoryDTO?.name || 'Sans Catégorie'} {care.productDTO?.categoryDTO?.tva ? `(${care.productDTO.categoryDTO.tva})` : ''}</td>
+              <td>{care.productDTO?.categoryDTO?.name || 'Sans Catégorie'} {care.productDTO?.categoryDTO?.tva ? `(${care.productDTO.categoryDTO.tva})` : ''}
+                    {/* 🌈 Category color tag */}
+                    {care.productDTO?.categoryDTO?.id && (
+                      <span
+                        style={{
+                          display: 'inline-block',
+                          width: '12px',
+                          height: '12px',
+                          borderRadius: '50%',
+                          backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+                          marginLeft: '8px',
+                          verticalAlign: 'middle'
+                        }}
+                      ></span>
+                    )}</td>
               <td>{care.productDTO?.productPrice.toFixed(2)} €</td>
               <td>
                 <input
@@ -535,9 +770,23 @@ const handlePrint = () => {
                   <div key={categoryName} className="product-category-group">
                     <h4>{categoryName}
                         {/* Display TVA next to the category name if it's available */}
-                              {products[0]?.categoryDTO?.tva && (
-                                <span> (TVA: {products[0].categoryDTO.tva})</span>
-                              )}
+                              {products[0]?.categoryDTO?.tva && ` (TVA: ${products[0].categoryDTO.tva})`}
+                                {/*                                 <span> (TVA: {products[0].categoryDTO.tva})</span> */}
+                                {/*                               )} */}
+                                {/* 🌈 Category color tag */}
+                                  {products[0]?.categoryDTO?.id && (
+                                    <span
+                                      style={{
+                                        display: 'inline-block',
+                                        width: '12px',
+                                        height: '12px',
+                                        borderRadius: '50%',
+                                        backgroundColor: getCategoryColor(products[0].categoryDTO.id),
+                                        marginLeft: '8px',
+                                        verticalAlign: 'middle'
+                                      }}
+                                    ></span>
+                                  )}
                           </h4>
                     <table className="product-table">
                       <thead>
@@ -551,7 +800,20 @@ const handlePrint = () => {
                       <tbody>
                         {products.map((product) => (
                           <tr key={product.id}>
-                            <td>{product.name}</td>
+                            <td>{product.name}
+                                 {product.categoryDTO?.id && (
+                                    <span
+                                      style={{
+                                        display: 'inline-block',
+                                        width: '10px',
+                                        height: '10px',
+                                        borderRadius: '50%',
+                                        backgroundColor: getCategoryColor(product.categoryDTO.id),
+                                        marginLeft: '5px',
+                                        verticalAlign: 'middle'
+                                      }}
+                                    ></span>
+                                  )}</td>
                             <td>{product.type}</td>
                             <td>{product.refProduct}</td>
                             <td>{parseFloat(product.productPrice).toFixed(2)} €</td>

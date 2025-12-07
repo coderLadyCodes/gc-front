@@ -25,6 +25,7 @@ import { ThemeProvider } from './components/common/ThemeProvider'
 import PrivateRoutes from './components/authentication/PrivateRoutes'
 import Unauthorized from './components/authentication/Unauthorized'
 
+
 const DashboardWithProviders = () => (
   <ClientProvider>
     <ProductProvider>
@@ -35,9 +36,11 @@ const DashboardWithProviders = () => (
 
 const ProductCategoryWrapper = () => {
   return (
+
     <ProductCategoryProvider>
       <Outlet />
     </ProductCategoryProvider>
+
   )
 }
 const AddCareProgramsWrapper = () => {
