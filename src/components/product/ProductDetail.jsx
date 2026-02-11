@@ -18,6 +18,10 @@ const ProductDetail = () => {
     const { categories } = useProductCategory()
     
 
+    const [color, setColor] = useState(
+      localStorage.getItem(`product-color-${id}`) || "#000000"
+    );
+
     const {data: product, isLoading, isError, error} = useQuery({
         queryKey: ['product', id],
         queryFn: async () => {
@@ -87,13 +91,22 @@ const ProductDetail = () => {
         productPrice: parseFloat(productData.productPrice) || 0, 
       }
       updateProduct.mutate(updatedData)
+
+      // 🎨 persist product color (frontend-only)
+          localStorage.setItem(`product-color-${id}`, color);
     }
   }
 
-// 🌈 color in localStorage with category ID
-const getCategoryColor = (categoryId) => {
-  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
-}
+// // 🌈 color in localStorage with product ID
+const getProductColor = (productId) => {
+  return localStorage.getItem(`product-color-${productId}`) || "#000000";
+};
+
+
+// // 🌈 color in localStorage with category ID
+// const getCategoryColor = (categoryId) => {
+//   return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+// }
 
     if (isLoading) return <Spinner />
     if (isError) return <p className='error-message'>{error.message || 'Une erreur est survenue.'}</p>
@@ -120,6 +133,17 @@ const getCategoryColor = (categoryId) => {
         
         {isEditing ? (
             <div className="productdetail-content">
+                 {/* 🌈 Color product name */}
+                <p>
+                  <strong>Couleur du produit:</strong>{" "}
+                  <input
+                    type="color"
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
+                    style={{ marginLeft: "10px", cursor: "pointer" }}
+                  />
+                </p>
+
                 <p><strong>Nom:</strong> <input type="text" name="name" value={productData?.name || ''} onChange={handleChange} maxLength={50}/>
                 <small className="input-helper-text-productdetail">Limite de 50 caractères</small></p>
                 <p><strong>Type:</strong> <input type="text" name="type" value={productData?.type || ''} onChange={handleChange} /></p>
@@ -169,14 +193,14 @@ const getCategoryColor = (categoryId) => {
                     </select>
                     {productData.categoryDTO?.id && (
                         <span
-                          style={{
-                            display: 'inline-block',
-                            width: '12px',
-                            height: '12px',
-                            borderRadius: '50%',
-                            backgroundColor: getCategoryColor(productData.categoryDTO.id),
-                            marginLeft: '8px'
-                          }}
+//                           style={{
+//                             display: 'inline-block',
+//                             width: '12px',
+//                             height: '12px',
+//                             borderRadius: '50%',
+//                             backgroundColor: getCategoryColor(productData.categoryDTO.id),
+//                             marginLeft: '8px'
+//                           }}
                         ></span>
                       )}
                 </p>
@@ -184,22 +208,31 @@ const getCategoryColor = (categoryId) => {
             </div>
         ) : (
             <div className="productdetail-content">
-                <p><strong>Nom:</strong> {product.name}</p>
+{/*                 <p><strong>Nom:</strong> {product.name}</p> */}
+
+                {/* 🌈 Color product name */}
                 <p><strong>Type:</strong> {product.type}</p>
+                <p>
+                  <strong>Nom:</strong>{" "}
+                  <span style={{ color: getProductColor(product.id), fontWeight: 600 }}>
+                    {product.name}
+                  </span>
+                </p>
+
                 <p><strong>Référence:</strong> {product.refProduct}</p>
                 <p><strong>Prix:</strong> {product.productPrice.toFixed(2)} €</p>
                 <p><strong>Catégorie:</strong> {product.categoryDTO?.name || 'Sans Catégorie'} ({product.categoryDTO?.tva || 'Sans TVA'})
                  {/* 🌈 Color Tag */}
                     {product.categoryDTO?.id && (
                       <span
-                        style={{
-                          display: 'inline-block',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '50%',
-                          backgroundColor: getCategoryColor(product.categoryDTO.id),
-                          marginLeft: '8px'
-                        }}
+//                         style={{
+//                           display: 'inline-block',
+//                           width: '12px',
+//                           height: '12px',
+//                           borderRadius: '50%',
+//                           backgroundColor: getCategoryColor(product.categoryDTO.id),
+//                           marginLeft: '8px'
+//                         }}
                       ></span>
                     )}</p>
                 <p><strong>Description:</strong></p>

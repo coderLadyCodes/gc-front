@@ -107,6 +107,7 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
                           print-color-adjust: exact;
                           font-size: 12px;
                         }
+
                         .programpreviewmodal-container {
                           width: 100%;
                         }
@@ -186,9 +187,14 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
         return <div>Loading client details...</div>
       }
   // 🌈 color in localStorage with category ID
-  const getCategoryColor = (categoryId) => {
-    return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
-  }
+//   const getCategoryColor = (categoryId) => {
+//     return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+//   }
+
+const getProductColor = (productId) => {
+  return localStorage.getItem(`product-color-${productId}`) || "#000000";
+};
+
 
   return (
     <Modal isOpen={!!program} onClose={onClose}>
@@ -233,7 +239,16 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
                                                     {cares.map(({ care, week }) =>
                                                         week[day]?.includes(timeSlot) ? (
                                                             <div key={care.id}>
+                                                              {/*  {care.productDTO?.name || 'Unknown Care'}*/}
+                                                              <span
+                                                                style={{
+                                                                  color: getProductColor(care.productDTO?.id),
+                                                                  fontWeight: 500
+                                                                }}
+                                                              >
                                                                 {care.productDTO?.name || 'Unknown Care'}
+                                                              </span>
+
                                                                 {care.productDTO?.categoryDTO?.id && (
                                                                           <span
                                                                             style={{
@@ -241,7 +256,7 @@ const ProgramPreviewModal  = ({onClose, program, careSelections}) => {
                                                                               width: '12px',
                                                                               height: '12px',
                                                                               borderRadius: '50%',
-                                                                              backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+                                                                              //backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
                                                                               marginLeft: '5px',
                                                                               verticalAlign: 'middle',
                                                                             }}

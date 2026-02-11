@@ -28,12 +28,18 @@ const AddProduct = () => {
 
   const [backendError, setBackendError] = useState(null)
 
+//       Frontend-only color
+      const [color, setColor] = useState('#ff8c00')
+
   const addProduct = useMutation({
     mutationFn: async (newProduct) => {
             const response = await axios.post(`/api/product`, newProduct, {  withCredentials: true,})
    return response.data
     },
-    onSuccess: () => {
+    onSuccess: (savedProduct) => {
+         // 🎨 save product color
+          localStorage.setItem(`product-color-${savedProduct.id}`, color)
+
       queryClient.invalidateQueries({ queryKey: ['products'] })
       navigate('/dashboard/product-category')
     },
@@ -183,6 +189,33 @@ const AddProduct = () => {
             ))}
           </select>
         </div>
+
+        <div className='add-product-field'>
+          <label>Couleur du produit</label>
+
+          <input
+            type="color"
+            value={color}
+            onChange={(e) => setColor(e.target.value)}
+            style={{ width: '60px', height: '40px', border: 'none' }}
+          />
+
+          {/* Preview */}
+          <div
+            style={{
+              marginTop: "8px",
+              display: "inline-block",
+              padding: "6px 12px",
+              borderRadius: "8px",
+              background: color,
+              color: "white",
+              fontWeight: "bold"
+            }}
+          >
+            Aperçu
+          </div>
+        </div>
+
   
         <div className="add-product-buttons-container">
         <button type="submit">Sauvegarder</button>

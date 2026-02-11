@@ -19,7 +19,7 @@ const AddCategory = () => {
     })
 
     // Frontend-only color
-    const [color, setColor] = useState('#ff8c00')
+//     const [color, setColor] = useState('#ff8c00')
 
     const addCategory = useMutation({
         mutationFn: async (newCategory) => {
@@ -31,10 +31,10 @@ const AddCategory = () => {
         onSuccess: (savedCategory) => {
 
             // 🌈 Save color in localStorage with category ID
-            localStorage.setItem(
-                `category-color-${savedCategory.id}`,
-                color
-            )
+//             localStorage.setItem(
+//                 `category-color-${savedCategory.id}`,
+//                 color
+//             )
 
             queryClient.invalidateQueries(['categories'])
 
@@ -91,31 +91,31 @@ const AddCategory = () => {
                     </select>
                 </label>
 
-                {/* 🌈 Color Picker */}
-                <label>
-                    Choisir une couleur:
-                    <input
-                        type='color'
-                        value={color}
-                        onChange={(e) => setColor(e.target.value)}
-                        style={{ width: '60px', height: '50px', border: 'none' }}
-                    />
-                </label>
+{/*                  */}{/* 🌈 Color Picker */}
+{/*                 <label> */}
+{/*                     Choisir une couleur: */}
+{/*                     <input */}
+{/*                         type='color' */}
+{/*                         value={color} */}
+{/*                         onChange={(e) => setColor(e.target.value)} */}
+{/*                         style={{ width: '60px', height: '50px', border: 'none' }} */}
+{/*                     /> */}
+{/*                 </label> */}
 
-                {/* Preview */}
-                <div
-                    style={{
-                        background: color,
-                        padding: '6px 14px',
-                        borderRadius: '8px',
-                        color: 'white',
-                        fontWeight: 'bold',
-                        marginTop: '10px',
-                        display: 'inline-block'
-                    }}
-                >
-                    Aperçu de la couleur
-                </div>
+{/*                  */}{/* Preview */}
+{/*                 <div */}
+{/*                     style={{ */}
+{/*                         background: color, */}
+{/*                         padding: '6px 14px', */}
+{/*                         borderRadius: '8px', */}
+{/*                         color: 'white', */}
+{/*                         fontWeight: 'bold', */}
+{/*                         marginTop: '10px', */}
+{/*                         display: 'inline-block' */}
+{/*                     }} */}
+{/*                 > */}
+{/*                     Aperçu de la couleur */}
+{/*                 </div> */}
 
                 <div className='add-category-actions'>
                     <button type='submit' disabled={addCategory.isLoading}>

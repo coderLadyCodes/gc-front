@@ -224,6 +224,8 @@ const AddCare = ({program, onClose, onCaresUpdated }) => {
   if (isLoading) return <Spinner />;
   if (error) return <p>Error: {error.message}</p>;
 
+
+
   //logo
 const getBase64Image = (imgUrl, callback) => {
     const img = new Image()
@@ -506,8 +508,8 @@ const handlePrint = () => {
       const categoryId = target.getAttribute('data-category-id');
       if (!categoryId) return;
       // Use same helper getCategoryColor function (from your component)
-      const color = getCategoryColor(categoryId) || '#999999';
-      const svg = createColorDotSVG(color, 12);
+      //const color = getCategoryColor(categoryId) || '#999999';
+      //const svg = createColorDotSVG(color, 12);
       // append the SVG node into the cloned DOM next to the text
       target.appendChild(svg);
     });
@@ -620,9 +622,10 @@ const handlePrint = () => {
 
 
 // 🌈 color in localStorage with category ID
-const getCategoryColor = (categoryId) => {
-  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
-}
+// const getCategoryColor = (categoryId) => {
+//   return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+// }
+
 
   return (
     <div className="add-care-container">
@@ -661,23 +664,35 @@ const getCategoryColor = (categoryId) => {
 {/*                         }} */}
 {/*                       ></span> */}
 {/*                     )}</td> */}
-                <td data-category-id={care.productDTO?.categoryDTO?.id || ""}>
-                  {care.productDTO?.name || 'Produit inconnu'}
+{/*                 <td data-category-id={care.productDTO?.categoryDTO?.id || ""}> */}
+{/*                   {care.productDTO?.name || 'Produit inconnu'} */}
 
-                  {care.productDTO?.categoryDTO?.id && (
-                    <span className="ui-category-bubble"
-                      style={{
-                        display: 'inline-block',
-                        width: '12px',
-                        height: '12px',
-                        borderRadius: '50%',
-                        backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
-                        marginLeft: '8px',
-                        verticalAlign: 'middle',
-                      }}
-                    ></span>
-                  )}
-                </td>
+{/*                   {care.productDTO?.categoryDTO?.id && ( */}
+{/*                     <span className="ui-category-bubble" */}
+{/* //                       style={{ */}
+{/* //                         display: 'inline-block', */}
+{/* //                         width: '12px', */}
+{/* //                         height: '12px', */}
+{/* //                         borderRadius: '50%', */}
+{/* //                         backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id), */}
+{/* //                         marginLeft: '8px', */}
+{/* //                         verticalAlign: 'middle', */}
+{/* //                       }} */}
+{/*                     ></span> */}
+{/*                   )} */}
+{/*                 </td> */}
+<td>
+  <span
+    style={{
+      color: localStorage.getItem(
+        `product-color-${care.productDTO?.id}`
+      ) || "#000"
+    }}
+  >
+    {care.productDTO?.name || 'Produit inconnu'}
+  </span>
+</td>
+
 
               <td>{care.productDTO?.type || 'Type inconnu'}</td>
               <td>{care.productDTO?.refProduct || 'Référence inconnue'}</td>
@@ -685,15 +700,15 @@ const getCategoryColor = (categoryId) => {
                     {/* 🌈 Category color tag */}
                     {care.productDTO?.categoryDTO?.id && (
                       <span
-                        style={{
-                          display: 'inline-block',
-                          width: '12px',
-                          height: '12px',
-                          borderRadius: '50%',
-                          backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
-                          marginLeft: '8px',
-                          verticalAlign: 'middle'
-                        }}
+//                         style={{
+//                           display: 'inline-block',
+//                           width: '12px',
+//                           height: '12px',
+//                           borderRadius: '50%',
+//                           backgroundColor: getCategoryColor(care.productDTO.categoryDTO.id),
+//                           marginLeft: '8px',
+//                           verticalAlign: 'middle'
+//                         }}
                       ></span>
                     )}</td>
               <td>{care.productDTO?.productPrice.toFixed(2)} €</td>
@@ -776,15 +791,15 @@ const getCategoryColor = (categoryId) => {
                                 {/* 🌈 Category color tag */}
                                   {products[0]?.categoryDTO?.id && (
                                     <span
-                                      style={{
-                                        display: 'inline-block',
-                                        width: '12px',
-                                        height: '12px',
-                                        borderRadius: '50%',
-                                        backgroundColor: getCategoryColor(products[0].categoryDTO.id),
-                                        marginLeft: '8px',
-                                        verticalAlign: 'middle'
-                                      }}
+//                                       style={{
+//                                         display: 'inline-block',
+//                                         width: '12px',
+//                                         height: '12px',
+//                                         borderRadius: '50%',
+//                                         backgroundColor: getCategoryColor(products[0].categoryDTO.id),
+//                                         marginLeft: '8px',
+//                                         verticalAlign: 'middle'
+//                                       }}
                                     ></span>
                                   )}
                           </h4>
@@ -800,20 +815,30 @@ const getCategoryColor = (categoryId) => {
                       <tbody>
                         {products.map((product) => (
                           <tr key={product.id}>
-                            <td>{product.name}
-                                 {product.categoryDTO?.id && (
-                                    <span
-                                      style={{
-                                        display: 'inline-block',
-                                        width: '10px',
-                                        height: '10px',
-                                        borderRadius: '50%',
-                                        backgroundColor: getCategoryColor(product.categoryDTO.id),
-                                        marginLeft: '5px',
-                                        verticalAlign: 'middle'
-                                      }}
-                                    ></span>
-                                  )}</td>
+{/*                             <td>{product.name} */}
+{/*                                  {product.categoryDTO?.id && ( */}
+{/*                                     <span */}
+{/*                                       style={{ */}
+{/*                                         display: 'inline-block', */}
+{/*                                         width: '10px', */}
+{/*                                         height: '10px', */}
+{/*                                         borderRadius: '50%', */}
+{/*                                         backgroundColor: getCategoryColor(product.categoryDTO.id), */}
+{/*                                         marginLeft: '5px', */}
+{/*                                         verticalAlign: 'middle' */}
+{/*                                       }} */}
+{/*                                     ></span> */}
+{/*                                   )}</td> */}
+<td>
+  <span
+    style={{
+      color: localStorage.getItem(`product-color-${product.id}`) || "#000"
+    }}
+  >
+    {product.name}
+  </span>
+</td>
+
                             <td>{product.type}</td>
                             <td>{product.refProduct}</td>
                             <td>{parseFloat(product.productPrice).toFixed(2)} €</td>

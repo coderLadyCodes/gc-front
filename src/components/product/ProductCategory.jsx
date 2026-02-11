@@ -50,10 +50,16 @@ groups[category].products.push(product)
     return groups
   }, {}) || {}
 
-// 🌈 color in localStorage with category ID
-const getCategoryColor = (categoryId) => {
-  return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+// 🎨 Product color (frontend-only)
+const getProductColor = (productId) => {
+  return localStorage.getItem(`product-color-${productId}`) || "#000000";
 };
+
+
+// 🌈 color in localStorage with category ID
+// const getCategoryColor = (categoryId) => {
+//   return localStorage.getItem(`category-color-${categoryId}`) || "#999999";
+// };
 
 
   if (isLoading) return <Spinner />
@@ -90,10 +96,11 @@ const getCategoryColor = (categoryId) => {
         Object.entries(groupedProducts).map(([categoryName, { products, tva }]) => (
       <div key={categoryName} className='productcategory-category-group'>
         <h3 className='productcategory-category-name'
-        style={{
-            borderLeft: `12px solid ${getCategoryColor(products[0].categoryDTO.id)}`,
-            paddingLeft: "10px"
-          }}>{categoryName}<span className="category-tva">({tva})</span></h3>
+//         style={{
+//             borderLeft: `12px solid ${getCategoryColor(products[0].categoryDTO.id)}`,
+//             paddingLeft: "10px"
+//           }}
+          >{categoryName}<span className="category-tva">({tva})</span></h3>
         <div className='productcategory-table-wrapper'>
         <table className='productcategory-table'>
           <thead className='productcategory-table-head'>
@@ -107,17 +114,21 @@ const getCategoryColor = (categoryId) => {
           <tbody className='productcategory-table-body'>
             {products.map((product) => (
               <tr key={product.id} className='productcategory-product-row'>
-                <td className='productcategory-product-cell'>
-                <span
+                <td className='productcategory-product-cell'
+
+//                     style={{
+//                       display: "inline-block",
+//                       width: "12px",
+//                       height: "12px",
+//                       borderRadius: "50%",
+//                       backgroundColor: getCategoryColor(product.categoryDTO.id),
+//                       marginRight: "8px"
+//                     }}
                     style={{
-                      display: "inline-block",
-                      width: "12px",
-                      height: "12px",
-                      borderRadius: "50%",
-                      backgroundColor: getCategoryColor(product.categoryDTO.id),
-                      marginRight: "8px"
+                      color: getProductColor(product.id),
+                      fontWeight: "600"
                     }}
-                  ></span>{product.name}</td>
+                  >{product.name}</td>
                 <td className='productcategory-product-cell'>{product.type}</td>
                 <td className='productcategory-product-cell'>{product.refProduct}</td>
                 <td className='productcategory-product-cell'>{product.productPrice ? parseFloat(product.productPrice).toFixed(2) : '0.00'} €</td>
